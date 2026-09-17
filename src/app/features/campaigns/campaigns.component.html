@@ -1,0 +1,141 @@
+<div class="campaigns-page">
+  <app-header title="Campaigns" [userName]="userName" (notificationClicked)="openNotifications()"
+    (profileClicked)="openProfile()" (logoutClicked)="logout()" />
+
+  <main class="campaigns-content">
+    @if (loading) {
+    <app-loading-state message="Loading campaigns..." />
+    }
+
+    @if (!loading && errorMessage) {
+    <app-error-state [message]="errorMessage" (retryClicked)="loadCampaigns()" />
+    }
+
+    @if (!loading && !errorMessage) {
+    <section class="page-intro">
+      <div>
+        <p class="eyebrow">Campaign management</p>
+
+        <h1>Your Campaigns</h1>
+
+        <p class="intro-text">
+          Create, manage, and track your fundraising campaigns.
+        </p>
+      </div>
+
+      <button type="button" class="primary-button" (click)="createCampaign()">
+        <span class="button-icon" aria-hidden="true">+</span>
+        Create Campaign
+      </button>
+    </section>
+
+    <section class="summary-grid">
+      <div class="summary-card">
+        <span class="summary-label">Total Campaigns</span>
+        <strong class="summary-value">
+          {{ campaigns.length }}
+        </strong>
+      </div>
+
+      <div class="summary-card">
+        <span class="summary-label">Active</span>
+        <strong class="summary-value">
+          {{ activeCampaignCount }}
+        </strong>
+      </div>
+
+      <div class="summary-card">
+        <span class="summary-label">Completed</span>
+        <strong class="summary-value">
+          {{ completedCampaignCount }}
+        </strong>
+      </div>
+
+      <div class="summary-card">
+        <span class="summary-label">Drafts</span>
+        <strong class="summary-value">
+          {{ draftCampaignCount }}
+        </strong>
+      </div>
+    </section>
+
+    <section class="filters-section">
+      <div class="search-wrapper">
+        <span class="search-icon" aria-hidden="true">
+          ⌕
+        </span>
+
+        <input type="search" class="search-input" placeholder="Search campaigns..." [value]="searchTerm"
+          (input)="onSearchChange($any($event.target).value)" />
+      </div>
+
+      <div class="filter-wrapper">
+        <label class="filter-label" for="campaign-status">
+          Status
+        </label>
+
+        <select id="campaign-status" class="status-select" [value]="statusFilter" (change)="onStatusChange($event)">
+          <option value="all">
+            All Campaigns
+          </option>
+
+          <option value="draft">
+            Draft
+          </option>
+
+          <option value="active">
+            Active
+          </option>
+
+          <option value="paused">
+            Paused
+          </option>
+
+          <option value="completed">
+            Completed
+          </option>
+
+          <option value="cancelled">
+            Cancelled
+          </option>
+        </select>
+      </div>
+    </section>
+
+    @if (filteredCampaigns.length > 0) {
+    <section class="campaigns-section">
+      <div class="section-header">
+        <div>
+          <h2>All Campaigns</h2>
+
+          <p>
+            Showing
+            {{ filteredCampaigns.length }}
+            campaign{{ filteredCampaigns.length === 1 ? '' : 's' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="campaigns-grid">
+        @for (
+        campaign of filteredCampaigns;
+        track campaign.id
+        ) {
+        <app-campaign-card [campaign]="campaign" [showActions]="true" [showProgress]="true"
+          (clicked)="openCampaign($event)" (editClicked)="editCampaign($event)" />
+        }
+      </div>
+    </section>
+    } @else {
+    <app-empty-state title="No campaigns found" message="There are no campaigns matching your current search or filter."
+      actionLabel="Create Campaign" (actionClicked)="createCampaign()" />
+    }
+
+    <section class="back-section">
+      <button type="button" class="secondary-button" (click)="openDashboard()">
+        ← Back to Dashboard
+      </button>
+    </section>
+    }
+  </main>
+</div>

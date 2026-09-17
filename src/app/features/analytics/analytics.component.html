@@ -1,0 +1,524 @@
+<div class="analytics-page">
+  <app-header
+    [userName]="userName"
+    [notificationCount]="0"
+    (dashboardClicked)="goToDashboard()"
+    (notificationsClicked)="goToNotifications()"
+    (profileClicked)="goToProfile()"
+    (logoutClicked)="logout()"
+  ></app-header>
+
+  <main class="page-content">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">INSIGHTS</p>
+
+        <h1>Analytics</h1>
+
+        <p class="page-description">
+          Understand donation activity, campaign performance,
+          and payment trends.
+        </p>
+      </div>
+    </section>
+
+    @if (loading) {
+      <app-loading-state
+        message="Loading analytics..."
+      ></app-loading-state>
+    } @else if (errorMessage) {
+      <app-error-state
+        [message]="errorMessage"
+        (retryClicked)="retryLoad()"
+      ></app-error-state>
+    } @else {
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">₹</div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Total Collected
+            </span>
+
+            <strong class="stat-value">
+              {{ formatCurrency(successfulAmount) }}
+            </strong>
+
+            <span class="stat-subtitle">
+              From successful donations
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">♥</div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Successful Donations
+            </span>
+
+            <strong class="stat-value">
+              {{ formatNumber(successfulCount) }}
+            </strong>
+
+            <span class="stat-subtitle">
+              {{ successRate.toFixed(1) }}% success rate
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">◈</div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Average Donation
+            </span>
+
+            <strong class="stat-value">
+              {{ formatCurrency(averageDonation) }}
+            </strong>
+
+            <span class="stat-subtitle">
+              Per successful donation
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">●</div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Active Campaigns
+            </span>
+
+            <strong class="stat-value">
+              {{ activeCampaigns }}
+            </strong>
+
+            <span class="stat-subtitle">
+              {{ completedCampaigns }} completed
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="overview-grid">
+        <div class="analytics-card monthly-card">
+          <div class="card-header">
+            <div>
+              <h2>Donation Trend</h2>
+
+              <p>
+                Successful donations over the last 6 months
+              </p>
+            </div>
+          </div>
+
+          <div class="chart">
+            @for (
+              item of monthlyDonations;
+              track item.month
+            ) {
+              <div class="chart-column">
+                <div class="chart-value">
+                  @if (item.amount > 0) {
+                    {{ formatCurrency(item.amount) }}
+                  } @else {
+                    ₹0
+                  }
+                </div>
+
+                <div class="bar-area">
+                  <div
+                    class="bar"
+                    [style.height.%]="
+                      item.amount > 0
+                        ? (item.amount / maxMonthlyAmount) * 100
+                        : 4
+                    "
+                  ></div>
+                </div>
+
+                <span class="chart-label">
+                  {{ item.month }}
+                </span>
+
+                <span class="chart-count">
+                  {{ item.count }}
+                  {{
+                    item.count === 1
+                      ? 'donation'
+                      : 'donations'
+                  }}
+                </span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="analytics-card status-card">
+          <div class="card-header">
+            <div>
+              <h2>Donation Status</h2>
+
+              <p>
+                Current payment distribution
+              </p>
+            </div>
+          </div>
+
+          <div class="status-list">
+            <div class="status-row">
+              <div class="status-info">
+                <span class="status-dot successful"></span>
+                <span>Successful</span>
+              </div>
+
+              <strong>
+                {{ successfulCount }}
+              </strong>
+            </div>
+
+            <div class="status-row">
+              <div class="status-info">
+                <span class="status-dot pending"></span>
+                <span>Pending</span>
+              </div>
+
+              <strong>
+                {{ pendingCount }}
+              </strong>
+            </div>
+
+            <div class="status-row">
+              <div class="status-info">
+                <span class="status-dot failed"></span>
+                <span>Failed</span>
+              </div>
+
+              <strong>
+                {{ failedCount }}
+              </strong>
+            </div>
+
+            <div class="status-row">
+              <div class="status-info">
+                <span class="status-dot refunded"></span>
+                <span>Refunded</span>
+              </div>
+
+              <strong>
+                {{ refundedCount }}
+              </strong>
+            </div>
+          </div>
+
+          <div class="status-total">
+            <span>Total donations</span>
+
+            <strong>
+              {{ totalDonations }}
+            </strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="analytics-card payment-card">
+        <div class="card-header">
+          <div>
+            <h2>Payment Methods</h2>
+
+            <p>
+              Successful donations by payment method
+            </p>
+          </div>
+        </div>
+
+        <div class="payment-grid">
+          <div class="payment-item">
+            <div class="payment-heading">
+              <span class="payment-name">UPI</span>
+
+              <span class="payment-count">
+                {{ getPaymentMethodCount('upi') }}
+              </span>
+            </div>
+
+            <strong class="payment-amount">
+              {{
+                formatCurrency(
+                  getPaymentMethodAmount('upi')
+                )
+              }}
+            </strong>
+
+            <div class="payment-track">
+              <div
+                class="payment-progress"
+                [style.width.%]="
+                  getPercentage(
+                    getPaymentMethodCount('upi'),
+                    successfulCount
+                  )
+                "
+              ></div>
+            </div>
+          </div>
+
+          <div class="payment-item">
+            <div class="payment-heading">
+              <span class="payment-name">Card</span>
+
+              <span class="payment-count">
+                {{ getPaymentMethodCount('card') }}
+              </span>
+            </div>
+
+            <strong class="payment-amount">
+              {{
+                formatCurrency(
+                  getPaymentMethodAmount('card')
+                )
+              }}
+            </strong>
+
+            <div class="payment-track">
+              <div
+                class="payment-progress"
+                [style.width.%]="
+                  getPercentage(
+                    getPaymentMethodCount('card'),
+                    successfulCount
+                  )
+                "
+              ></div>
+            </div>
+          </div>
+
+          <div class="payment-item">
+            <div class="payment-heading">
+              <span class="payment-name">
+                Net Banking
+              </span>
+
+              <span class="payment-count">
+                {{ getPaymentMethodCount('netbanking') }}
+              </span>
+            </div>
+
+            <strong class="payment-amount">
+              {{
+                formatCurrency(
+                  getPaymentMethodAmount('netbanking')
+                )
+              }}
+            </strong>
+
+            <div class="payment-track">
+              <div
+                class="payment-progress"
+                [style.width.%]="
+                  getPercentage(
+                    getPaymentMethodCount('netbanking'),
+                    successfulCount
+                  )
+                "
+              ></div>
+            </div>
+          </div>
+
+          <div class="payment-item">
+            <div class="payment-heading">
+              <span class="payment-name">
+                Wallet
+              </span>
+
+              <span class="payment-count">
+                {{ getPaymentMethodCount('wallet') }}
+              </span>
+            </div>
+
+            <strong class="payment-amount">
+              {{
+                formatCurrency(
+                  getPaymentMethodAmount('wallet')
+                )
+              }}
+            </strong>
+
+            <div class="payment-track">
+              <div
+                class="payment-progress"
+                [style.width.%]="
+                  getPercentage(
+                    getPaymentMethodCount('wallet'),
+                    successfulCount
+                  )
+                "
+              ></div>
+            </div>
+          </div>
+
+          <div class="payment-item">
+            <div class="payment-heading">
+              <span class="payment-name">
+                Bank Transfer
+              </span>
+
+              <span class="payment-count">
+                {{ getPaymentMethodCount('bank_transfer') }}
+              </span>
+            </div>
+
+            <strong class="payment-amount">
+              {{
+                formatCurrency(
+                  getPaymentMethodAmount('bank_transfer')
+                )
+              }}
+            </strong>
+
+            <div class="payment-track">
+              <div
+                class="payment-progress"
+                [style.width.%]="
+                  getPercentage(
+                    getPaymentMethodCount('bank_transfer'),
+                    successfulCount
+                  )
+                "
+              ></div>
+            </div>
+          </div>
+
+          <div class="payment-item">
+            <div class="payment-heading">
+              <span class="payment-name">Other</span>
+
+              <span class="payment-count">
+                {{ getPaymentMethodCount('other') }}
+              </span>
+            </div>
+
+            <strong class="payment-amount">
+              {{
+                formatCurrency(
+                  getPaymentMethodAmount('other')
+                )
+              }}
+            </strong>
+
+            <div class="payment-track">
+              <div
+                class="payment-progress"
+                [style.width.%]="
+                  getPercentage(
+                    getPaymentMethodCount('other'),
+                    successfulCount
+                  )
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="analytics-card campaigns-card">
+        <div class="card-header">
+          <div>
+            <h2>Campaign Performance</h2>
+
+            <p>
+              Successful donations attributed to each campaign
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="view-button"
+            (click)="goToDashboard()"
+          >
+            Dashboard
+          </button>
+        </div>
+
+        @if (topCampaigns.length === 0) {
+          <div class="campaign-empty">
+            <div class="empty-icon">◈</div>
+
+            <h3>No campaign data</h3>
+
+            <p>
+              Campaign performance will appear here when
+              campaigns and donations are available.
+            </p>
+          </div>
+        } @else {
+          <div class="campaign-list">
+            @for (
+              item of topCampaigns;
+              track item.campaign.id
+            ) {
+              <div class="campaign-row">
+                <div class="campaign-main">
+                  <div class="campaign-title">
+                    {{ item.campaign.title }}
+                  </div>
+
+                  <div class="campaign-meta">
+                    {{ item.donationCount }}
+
+                    {{
+                      item.donationCount === 1
+                        ? 'successful donation'
+                        : 'successful donations'
+                    }}
+
+                    <span class="meta-separator">•</span>
+
+                    Goal:
+
+                    {{
+                      formatCurrency(
+                        item.campaign.goal_amount,
+                        item.campaign.currency
+                      )
+                    }}
+                  </div>
+                </div>
+
+                <div class="campaign-amount">
+                  <strong>
+                    {{
+                      formatCurrency(
+                        item.successfulAmount,
+                        item.campaign.currency
+                      )
+                    }}
+                  </strong>
+
+                  <span>
+                    {{ item.progressPercentage.toFixed(1) }}%
+                  </span>
+                </div>
+
+                <div class="campaign-progress">
+                  <div
+                    class="campaign-progress-fill"
+                    [style.width.%]="
+                      item.progressPercentage
+                    "
+                  ></div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </section>
+    }
+  </main>
+</div>

@@ -1,0 +1,352 @@
+<div class="donation-details-page">
+  <app-header
+    title="Donation Details"
+    [userName]="userName"
+    [notificationCount]="0"
+    (notificationClicked)="openNotifications()"
+    (profileClicked)="openProfile()"
+    (logoutClicked)="logout()"
+  />
+
+  <main class="donation-details-content">
+    @if (loading) {
+      <app-loading-state
+        message="Loading donation details..."
+      />
+    }
+
+    @if (!loading && errorMessage) {
+      <app-error-state
+        [message]="errorMessage"
+        (retryClicked)="retryLoad()"
+      />
+
+      <div class="back-section">
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="goBack()"
+        >
+          ← Back to Donations
+        </button>
+      </div>
+    }
+
+    @if (!loading && !errorMessage && donation) {
+      <section class="page-actions">
+        <button
+          type="button"
+          class="back-button"
+          (click)="goBack()"
+        >
+          ← Back to Donations
+        </button>
+      </section>
+
+      <section class="donation-hero">
+        <div class="hero-icon">
+          ₹
+        </div>
+
+        <div class="hero-content">
+          <div class="hero-title-row">
+            <div>
+              <p class="eyebrow">
+                Donation transaction
+              </p>
+
+              <h1>
+                {{ formatCurrency(amount) }}
+              </h1>
+            </div>
+
+            <span
+              class="status-badge"
+              [class.successful]="isSuccessful"
+              [class.pending]="isPending"
+              [class.failed]="isFailed"
+            >
+              <span class="status-dot"></span>
+              {{ statusLabel }}
+            </span>
+          </div>
+
+          <p class="donation-date">
+            Received
+            {{
+              donation.donated_at
+                | date: 'dd MMMM yyyy, hh:mm a'
+            }}
+          </p>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <div class="summary-card">
+          <span class="summary-label">
+            Amount
+          </span>
+
+          <strong class="summary-value">
+            {{ formatCurrency(amount) }}
+          </strong>
+
+          <span class="summary-caption">
+            {{ currency }}
+          </span>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Payment Method
+          </span>
+
+          <strong class="summary-value text-value">
+            {{ paymentMethodLabel }}
+          </strong>
+
+          <span class="summary-caption">
+            Payment channel
+          </span>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Donor
+          </span>
+
+          <strong class="summary-value text-value">
+            {{ donorName }}
+          </strong>
+
+          <span class="summary-caption">
+            {{ donorEmail }}
+          </span>
+        </div>
+      </section>
+
+      <div class="details-layout">
+        <section class="details-card">
+          <div class="card-heading">
+            <div>
+              <h2>
+                Donor Information
+              </h2>
+
+              <p>
+                Information captured with this donation.
+              </p>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">
+                Donor Name
+              </span>
+
+              <span class="detail-value">
+                {{ donorName }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Email
+              </span>
+
+              <span class="detail-value">
+                {{ donorEmail }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Anonymous
+              </span>
+
+              <span class="detail-value">
+                {{ donation.is_anonymous ? 'Yes' : 'No' }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Donor ID
+              </span>
+
+              <span class="detail-value mono">
+                {{ donation.donor_id || '—' }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section class="details-card">
+          <div class="card-heading">
+            <div>
+              <h2>
+                Payment Information
+              </h2>
+
+              <p>
+                Transaction and payment details.
+              </p>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">
+                Payment Method
+              </span>
+
+              <span class="detail-value">
+                {{ paymentMethodLabel }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Payment Status
+              </span>
+
+              <span class="detail-value">
+                {{ statusLabel }}
+              </span>
+            </div>
+
+            <div class="detail-item full-width">
+              <span class="detail-label">
+                Transaction ID
+              </span>
+
+              <span class="detail-value mono">
+                {{ donation.transaction_id || '—' }}
+              </span>
+            </div>
+
+            <div class="detail-item full-width">
+              <span class="detail-label">
+                Payment Reference
+              </span>
+
+              <span class="detail-value mono">
+                {{ donation.payment_reference || '—' }}
+              </span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      @if (donation.donation_message) {
+        <section class="message-card">
+          <div class="card-heading">
+            <div>
+              <h2>
+                Donor Message
+              </h2>
+
+              <p>
+                Message submitted with the donation.
+              </p>
+            </div>
+          </div>
+
+          <div class="message-content">
+            “{{ donation.donation_message }}”
+          </div>
+        </section>
+      }
+
+      <section class="timeline-card">
+        <div class="card-heading">
+          <div>
+            <h2>
+              Transaction Timeline
+            </h2>
+
+            <p>
+              Important dates associated with this donation.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+
+            <div class="timeline-content">
+              <strong>
+                Donation Created
+              </strong>
+
+              <span>
+                {{
+                  donation.created_at
+                    | date: 'dd MMM yyyy, hh:mm a'
+                }}
+              </span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+
+            <div class="timeline-content">
+              <strong>
+                Donation Received
+              </strong>
+
+              <span>
+                {{
+                  donation.donated_at
+                    | date: 'dd MMM yyyy, hh:mm a'
+                }}
+              </span>
+            </div>
+          </div>
+
+          @if (donation.updated_at) {
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+
+              <div class="timeline-content">
+                <strong>
+                  Last Updated
+                </strong>
+
+                <span>
+                  {{
+                    donation.updated_at
+                      | date: 'dd MMM yyyy, hh:mm a'
+                  }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="bottom-actions">
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="goBack()"
+        >
+          ← Back to Donations
+        </button>
+
+        @if (donation.donor_id) {
+          <button
+            type="button"
+            class="primary-button"
+            (click)="openDonor()"
+          >
+            View Donor
+          </button>
+        }
+      </section>
+    }
+  </main>
+</div>

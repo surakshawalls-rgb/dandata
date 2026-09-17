@@ -1,0 +1,175 @@
+<div class="profile-page">
+  <app-header
+    [userName]="userName"
+    [notificationCount]="0"
+    (dashboardClicked)="goToDashboard()"
+    (notificationsClicked)="goToNotifications()"
+    (profileClicked)="goToProfile()"
+    (logoutClicked)="logout()"
+  ></app-header>
+
+  <main class="page-content">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">ACCOUNT</p>
+
+        <h1>Profile</h1>
+
+        <p class="page-description">
+          Manage your personal account information.
+        </p>
+      </div>
+    </section>
+
+    @if (loading) {
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <p>Loading profile...</p>
+      </div>
+    } @else {
+      <div class="profile-layout">
+        <section class="profile-card">
+          <div class="profile-banner"></div>
+
+          <div class="profile-content">
+            <div class="avatar">
+              {{ initials }}
+            </div>
+
+            <h2>
+              {{ fullName || 'Your Name' }}
+            </h2>
+
+            <p class="profile-email">
+              {{ email }}
+            </p>
+
+            <div class="profile-divider"></div>
+
+            <div class="profile-meta">
+              <div class="meta-item">
+                <span class="meta-label">
+                  Email
+                </span>
+
+                <span class="meta-value">
+                  {{ email }}
+                </span>
+              </div>
+
+              <div class="meta-item">
+                <span class="meta-label">
+                  Account ID
+                </span>
+
+                <span class="meta-value account-id">
+                  {{ userId }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>Personal Information</h2>
+
+              <p>
+                Update the information associated with your account.
+              </p>
+            </div>
+          </div>
+
+          @if (successMessage) {
+            <div class="message success-message">
+              <span class="message-icon">✓</span>
+
+              <span>
+                {{ successMessage }}
+              </span>
+            </div>
+          }
+
+          @if (errorMessage) {
+            <div class="message error-message">
+              <span class="message-icon">!</span>
+
+              <span>
+                {{ errorMessage }}
+              </span>
+            </div>
+          }
+
+          <form
+            class="profile-form"
+            (ngSubmit)="saveProfile()"
+          >
+            <div class="form-group">
+              <label for="fullName">
+                Full Name
+              </label>
+
+              <input
+                id="fullName"
+                type="text"
+                name="fullName"
+                [(ngModel)]="fullName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">
+                Email Address
+              </label>
+
+              <input
+                id="email"
+                type="email"
+                name="email"
+                [value]="email"
+                disabled
+              />
+
+              <span class="field-hint">
+                Email address is managed by your authentication account.
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">
+                Phone Number
+              </label>
+
+              <input
+                id="phone"
+                type="tel"
+                name="phone"
+                [(ngModel)]="phone"
+                placeholder="Enter your phone number"
+                autocomplete="tel"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="save-button"
+                [disabled]="saving"
+              >
+                @if (saving) {
+                  <span class="button-spinner"></span>
+                  Saving...
+                } @else {
+                  Save Changes
+                }
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    }
+  </main>
+</div>

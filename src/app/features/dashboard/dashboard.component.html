@@ -1,0 +1,278 @@
+<div class="dashboard-page">
+
+  <app-header
+    title="Dashboard"
+    [userName]="userName"
+    [notificationCount]="unreadNotifications"
+    (notificationsClicked)="openNotifications()"
+    (profileClicked)="openProfile()"
+  />
+
+  <main class="dashboard-content">
+
+    @if (loading) {
+      <app-loading-state
+        message="Loading your dashboard..."
+      />
+    }
+
+    @if (!loading && errorMessage) {
+      <app-error-state
+        [message]="errorMessage"
+        (retryClicked)="loadDashboard()"
+      />
+    }
+
+    @if (!loading && !errorMessage) {
+
+      <section class="welcome-section">
+        <div>
+          <p class="eyebrow">Overview</p>
+
+          <h1>
+            Welcome back@if (userName) {
+            , {{ userName }}
+            }!
+          </h1>
+
+          <p class="welcome-text">
+            Here's what's happening with your donations and campaigns.
+          </p>
+        </div>
+      </section>
+
+
+      <!-- =====================================================
+           STATISTICS
+           ===================================================== -->
+
+      <section class="stats-grid">
+
+        <app-stat-card
+          title="Total Donations"
+          [value]="totalDonations"
+          icon="heart"
+        />
+
+        <app-stat-card
+          title="Successful Donations"
+          [value]="successfulDonations"
+          icon="checkmark-circle"
+        />
+
+        <app-stat-card
+          title="Total Donated"
+          [value]="formattedTotalDonated"
+          icon="cash"
+        />
+
+        <app-stat-card
+          title="Average Donation"
+          [value]="formattedAverageDonation"
+          icon="analytics"
+        />
+
+      </section>
+
+
+      <!-- =====================================================
+           RECENT DONATIONS
+           ===================================================== -->
+
+      <section class="dashboard-section">
+
+        <div class="section-header">
+
+          <div>
+            <p class="eyebrow">Activity</p>
+            <h2>Recent Donations</h2>
+          </div>
+
+          <button
+            type="button"
+            class="text-button"
+            (click)="openDonations()"
+          >
+            View all
+          </button>
+
+        </div>
+
+
+        @if (recentDonations.length > 0) {
+
+          <div class="donations-list">
+
+            @for (
+              donation of recentDonations;
+              track donation.id
+            ) {
+
+              <app-donation-item
+                [donation]="donation"
+                (clicked)="openDonation($event)"
+              />
+
+            }
+
+          </div>
+
+        } @else {
+
+          <app-empty-state
+            title="No donations yet"
+            message="Your recent donations will appear here."
+          />
+
+        }
+
+      </section>
+
+
+      <!-- =====================================================
+           ACTIVE CAMPAIGNS
+           ===================================================== -->
+
+      <section class="dashboard-section">
+
+        <div class="section-header">
+
+          <div>
+            <p class="eyebrow">Fundraising</p>
+            <h2>Active Campaigns</h2>
+          </div>
+
+          <button
+            type="button"
+            class="text-button"
+            (click)="openCampaigns()"
+          >
+            View all
+          </button>
+
+        </div>
+
+
+        @if (activeCampaigns.length > 0) {
+
+          <div class="campaigns-grid">
+
+            @for (
+              campaign of activeCampaigns;
+              track campaign.id
+            ) {
+
+              <app-campaign-card
+                [campaign]="campaign"
+                [showActions]="false"
+                [showProgress]="true"
+                (clicked)="openCampaign($event)"
+              />
+
+            }
+
+          </div>
+
+        } @else {
+
+          <app-empty-state
+            title="No active campaigns"
+            message="Active fundraising campaigns will appear here."
+          />
+
+        }
+
+      </section>
+
+
+      <!-- =====================================================
+           QUICK ACTIONS
+           ===================================================== -->
+
+      <section class="dashboard-section quick-actions-section">
+
+        <div class="section-header">
+
+          <div>
+            <p class="eyebrow">Shortcuts</p>
+            <h2>Quick Actions</h2>
+          </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+          <button
+            type="button"
+            class="quick-action"
+            (click)="openCampaigns()"
+          >
+            <span class="quick-action-icon">
+              +
+            </span>
+
+            <span>
+              <strong>Campaigns</strong>
+              <small>Manage fundraising campaigns</small>
+            </span>
+          </button>
+
+
+          <button
+            type="button"
+            class="quick-action"
+            (click)="openDonations()"
+          >
+            <span class="quick-action-icon">
+              ₹
+            </span>
+
+            <span>
+              <strong>Donations</strong>
+              <small>View donation activity</small>
+            </span>
+          </button>
+
+
+          <button
+            type="button"
+            class="quick-action"
+            (click)="openProfile()"
+          >
+            <span class="quick-action-icon">
+              ◯
+            </span>
+
+            <span>
+              <strong>Profile</strong>
+              <small>Manage your account</small>
+            </span>
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           LOGOUT
+           ===================================================== -->
+
+      <section class="logout-section">
+
+        <button
+          type="button"
+          class="logout-button"
+          (click)="logout()"
+        >
+          Sign out
+        </button>
+
+      </section>
+
+    }
+
+  </main>
+
+</div>

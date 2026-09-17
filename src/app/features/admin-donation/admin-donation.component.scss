@@ -1,0 +1,665 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.donation-page {
+  min-height: 100vh;
+  color: #172033;
+}
+
+
+/* ==============================
+   ADMIN HEADER
+   ============================== */
+
+.admin-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e9f0;
+}
+
+.header-inner {
+  width: min(1180px, calc(100% - 40px));
+
+  min-height: 70px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #172033;
+
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 750;
+}
+
+.admin-badge {
+  padding: 5px 9px;
+
+  border-radius: 6px;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+/* ==============================
+   BACK BUTTON
+   ============================== */
+
+.back-button {
+  min-height: 40px;
+
+  padding: 0 14px;
+
+  border: 1px solid #d7dde7;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #475569;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.back-button:hover {
+  background: #f8fafc;
+
+  border-color: #2563eb;
+
+  color: #2563eb;
+}
+
+
+/* ==============================
+   MAIN
+   ============================== */
+
+.page-main {
+  width: min(820px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 54px 0 80px;
+}
+
+
+/* ==============================
+   PAGE HEADING
+   ============================== */
+
+.page-heading {
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  margin: 0 0 9px;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+.page-heading h1 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 40px;
+  line-height: 1.15;
+
+  letter-spacing: -1.2px;
+}
+
+.page-heading p:not(.eyebrow) {
+  max-width: 650px;
+
+  margin: 12px 0 0;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* ==============================
+   FORM CARD
+   ============================== */
+
+.form-card {
+  padding: 34px;
+
+  border: 1px solid #e5e9f0;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==============================
+   FORM GRID
+   ============================== */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 24px 20px;
+}
+
+.form-field {
+  min-width: 0;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+
+/* ==============================
+   LABELS
+   ============================== */
+
+.form-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #334155;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-field label span {
+  color: #2563eb;
+}
+
+
+/* ==============================
+   INPUTS
+   ============================== */
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d7dde7;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #172033;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-field input {
+  height: 46px;
+
+  padding: 0 13px;
+}
+
+.form-field textarea {
+  min-height: 105px;
+
+  padding: 12px 13px;
+
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px #eff6ff;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #a0aec0;
+}
+
+
+/* ==============================
+   HELP TEXT
+   ============================== */
+
+.form-field small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+/* ==============================
+   AMOUNT
+   ============================== */
+
+.amount-input {
+  position: relative;
+}
+
+.amount-input > span {
+  position: absolute;
+
+  left: 13px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  pointer-events: none;
+}
+
+.amount-input input {
+  padding-left: 30px;
+}
+
+
+/* ==============================
+   FORM FOOTER
+   ============================== */
+
+.form-footer {
+  margin-top: 30px;
+
+  padding-top: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  border-top: 1px solid #eef1f5;
+}
+
+.form-footer > p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+.form-footer strong {
+  color: #2563eb;
+}
+
+
+/* ==============================
+   ACTIONS
+   ============================== */
+
+.form-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button,
+.whatsapp-button {
+  min-height: 44px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* Primary */
+
+.primary-button {
+  border: 0;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.primary-button:disabled,
+.secondary-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* Secondary */
+
+.secondary-button {
+  border: 1px solid #d7dde7;
+
+  background: #ffffff;
+  color: #475569;
+}
+
+.secondary-button:hover:not(:disabled) {
+  border-color: #2563eb;
+
+  color: #2563eb;
+
+  background: #f8fafc;
+}
+
+
+/* WhatsApp */
+
+.whatsapp-button {
+  border: 0;
+
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.whatsapp-button:hover {
+  background: #15803d;
+}
+
+
+/* ==============================
+   BUTTON SPINNER
+   ============================== */
+
+.button-spinner {
+  width: 15px;
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation:
+    donation-button-spin 0.7s linear infinite;
+}
+
+@keyframes donation-button-spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ==============================
+   ERROR
+   ============================== */
+
+.error-box {
+  margin-bottom: 24px;
+
+  padding: 13px 15px;
+
+  border: 1px solid #f3d2ce;
+  border-radius: 8px;
+
+  background: #fff8f7;
+
+  color: #b42318;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* ==============================
+   SUCCESS
+   ============================== */
+
+.success-box {
+  padding: 22px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 16px;
+
+  border: 1px solid #cce5d2;
+  border-radius: 10px;
+
+  background: #f5fbf6;
+}
+
+.success-icon {
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #d9f2df;
+
+  color: #18794e;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.success-box h2 {
+  margin: 0;
+
+  color: #166534;
+
+  font-size: 18px;
+}
+
+.success-box p {
+  margin: 7px 0 0;
+
+  color: #4d6b56;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.success-actions {
+  margin-top: 24px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+/* ==============================
+   MOBILE
+   ============================== */
+
+@media (max-width: 650px) {
+
+  .header-inner {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .brand-name,
+  .admin-badge {
+    display: none;
+  }
+
+  .page-main {
+    width: min(100% - 24px, 820px);
+
+    padding-top: 40px;
+    padding-bottom: 50px;
+  }
+
+  .page-heading h1 {
+    font-size: 34px;
+  }
+
+  .page-heading p:not(.eyebrow) {
+    font-size: 14px;
+  }
+
+  .form-card {
+    padding: 22px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .form-footer {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .form-actions {
+    width: 100%;
+  }
+
+  .form-actions button {
+    flex: 1;
+  }
+
+  .success-actions {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .success-actions button {
+    width: 100%;
+  }
+
+  .success-box {
+    padding: 18px;
+
+    gap: 12px;
+  }
+
+  .success-box h2 {
+    font-size: 16px;
+  }
+
+  .success-box p {
+    font-size: 12px;
+  }
+
+}
+
+
+/* ==============================
+   REDUCED MOTION
+   ============================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .button-spinner {
+    animation: none;
+  }
+
+}

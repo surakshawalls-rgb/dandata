@@ -1,0 +1,276 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <!-- ==============================
+         BRAND
+         ============================== -->
+
+    <div class="login-card__brand">
+
+      <div class="login-card__logo">
+        D
+      </div>
+
+      <h1>
+        Daandata
+      </h1>
+
+      <p>
+        श्री विश्वकर्मा मंदिर एवं सेवा समिति
+      </p>
+
+    </div>
+
+
+    <!-- ==============================
+         HEADER
+         ============================== -->
+
+    <div class="login-card__header">
+
+      <h2>
+        समिति प्रबंधन में प्रवेश करें
+      </h2>
+
+      <p>
+        दान रिकॉर्ड और समिति की जानकारी सुरक्षित रूप से प्रबंधित करें।
+      </p>
+
+    </div>
+
+
+    <!-- ==============================
+         ERROR
+         ============================== -->
+
+    @if (errorMessage) {
+
+      <div
+        class="login-card__error"
+        role="alert"
+      >
+
+        <span class="login-card__error-icon">
+          !
+        </span>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+
+      </div>
+
+    }
+
+
+    <!-- ==============================
+         LOGIN FORM
+         ============================== -->
+
+    <form
+      class="login-form"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <!-- EMAIL -->
+
+      <div class="login-form__field">
+
+        <label for="email">
+          ईमेल पता
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="अपना ईमेल दर्ज करें"
+          autocomplete="email"
+          [disabled]="loading"
+          required
+        />
+
+      </div>
+
+
+      <!-- PASSWORD -->
+
+      <div class="login-form__field">
+
+        <div class="login-form__label-row">
+
+          <label for="password">
+            पासवर्ड
+          </label>
+
+          <a
+            routerLink="/forgot-password"
+            class="login-form__forgot"
+          >
+            पासवर्ड भूल गए?
+          </a>
+
+        </div>
+
+
+        <div class="login-form__password">
+
+          <input
+            id="password"
+            [type]="
+              showPassword ? 'text' : 'password'
+            "
+            name="password"
+            [(ngModel)]="password"
+            placeholder="अपना पासवर्ड दर्ज करें"
+            autocomplete="current-password"
+            [disabled]="loading"
+            required
+          />
+
+
+          <button
+            type="button"
+            class="login-form__password-toggle"
+            [attr.aria-label]="
+              showPassword
+                ? 'पासवर्ड छिपाएँ'
+                : 'पासवर्ड दिखाएँ'
+            "
+            [disabled]="loading"
+            (click)="togglePasswordVisibility()"
+          >
+
+            @if (showPassword) {
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+
+                <path
+                  d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                ></path>
+
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="3"
+                ></circle>
+
+              </svg>
+
+            } @else {
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+
+                <path
+                  d="M3 3l18 18"
+                ></path>
+
+                <path
+                  d="M10.6 10.6a2 2 0 0 0 2.8 2.8"
+                ></path>
+
+                <path
+                  d="M9.9 5.2A10.5 10.5 0 0 1 12 5c6.5 0 10 7 10 7a18.4 18.4 0 0 1-3.2 4.1"
+                ></path>
+
+                <path
+                  d="M6.2 6.2C3.5 8.1 2 12 2 12s3.5 7 10 7c1.5 0 2.8-.3 4-.8"
+                ></path>
+
+              </svg>
+
+            }
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+
+      <button
+        type="submit"
+        class="login-form__submit"
+        [disabled]="loading"
+      >
+
+        @if (loading) {
+
+          <span
+            class="login-form__spinner"
+            aria-hidden="true"
+          ></span>
+
+          <span>
+            प्रवेश हो रहा है...
+          </span>
+
+        } @else {
+
+          <span>
+            सुरक्षित प्रवेश
+          </span>
+
+        }
+
+      </button>
+
+    </form>
+
+
+    <!-- ==============================
+         REGISTER
+         ============================== -->
+
+    <div class="login-card__register">
+
+     <!--  <span>
+        अभी खाता नहीं है?
+      </span>
+
+      <a routerLink="/register">
+        खाता बनाएँ
+      </a> -->
+
+    </div>
+
+
+    <!-- ==============================
+         SECURITY NOTE
+         ============================== -->
+
+    <div class="login-card__security">
+
+      <span class="login-card__security-icon">
+        ✓
+      </span>
+
+      <span>
+        केवल अधिकृत समिति सदस्यों के लिए
+      </span>
+
+    </div>
+
+  </div>
+
+</div>

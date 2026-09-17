@@ -1,0 +1,59 @@
+<div class="stat-card">
+
+  <div class="stat-card-content">
+
+    <div class="stat-card-header">
+      <span class="stat-card-title">
+        {{ title }}
+      </span>
+
+      @if (icon) {
+        <div class="stat-card-icon">
+          <span aria-hidden="true">
+            {{ iconSymbol }}
+          </span>
+        </div>
+      }
+    </div>
+
+    @if (loading) {
+
+      <div class="stat-card-loading">
+        <span class="loading-bar loading-bar-value"></span>
+      </div>
+
+    } @else {
+
+      <div class="stat-card-value">
+        {{ value }}
+      </div>
+
+      @if (subtitle) {
+        <div class="stat-card-subtitle">
+          {{ subtitle }}
+        </div>
+      }
+
+      @if (trend !== '') {
+        <div
+          class="stat-card-trend"
+          [class.positive]="trendPositive"
+          [class.negative]="!trendPositive"
+        >
+          <span class="trend-value">
+            {{ trend }}
+          </span>
+
+          @if (trendLabel) {
+            <span class="trend-label">
+              {{ trendLabel }}
+            </span>
+          }
+        </div>
+      }
+
+    }
+
+  </div>
+
+</div>

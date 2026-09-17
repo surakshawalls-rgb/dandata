@@ -1,0 +1,449 @@
+<div class="donor-details-page">
+  <app-header
+    title="Donor Details"
+    [userName]="userName"
+    [notificationCount]="0"
+    (notificationClicked)="openNotifications()"
+    (profileClicked)="openProfile()"
+    (logoutClicked)="logout()"
+  />
+
+  <main class="donor-details-content">
+    @if (loading) {
+      <app-loading-state
+        message="Loading donor details..."
+      />
+    }
+
+  @if (!loading && errorMessage) {
+  <app-error-state [message]="errorMessage" (retryClicked)="retryLoad()" />
+  
+  <div class="back-section">
+    <button type="button" class="secondary-button" (click)="goBack()">
+      ← Back to Donors
+    </button>
+  </div>
+  }
+
+    @if (!loading && !errorMessage && donor) {
+      <section class="page-actions">
+        <button
+          type="button"
+          class="back-button"
+          (click)="goBack()"
+        >
+          ← Back to Donors
+        </button>
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="editDonor()"
+        >
+          Edit Donor
+        </button>
+      </section>
+
+      <section class="donor-hero">
+        <div class="donor-avatar">
+          {{ initials }}
+        </div>
+
+        <div class="donor-identity">
+          <div class="identity-heading">
+            <h1>
+              {{ donorName }}
+            </h1>
+
+            <span
+              class="status-badge"
+              [class.inactive]="!donor.is_active"
+            >
+              <span class="status-dot"></span>
+              {{ donor.is_active ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+
+          <p class="donor-type">
+            {{ getDonorTypeLabel() }}
+          </p>
+
+          @if (donor.email) {
+            <a
+              class="contact-link"
+              [href]="'mailto:' + donor.email"
+            >
+              {{ donor.email }}
+            </a>
+          }
+
+          @if (donor.phone) {
+            <a
+              class="contact-link"
+              [href]="'tel:' + donor.phone"
+            >
+              {{ donor.phone }}
+            </a>
+          }
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">
+            Total Donated
+          </span>
+
+          <strong class="stat-value">
+            {{ formatCurrency(totalDonated) }}
+          </strong>
+
+          <span class="stat-caption">
+            Successful donations
+          </span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">
+            Donations
+          </span>
+
+          <strong class="stat-value">
+            {{ donationCount }}
+          </strong>
+
+          <span class="stat-caption">
+            Successful transactions
+          </span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">
+            Average Donation
+          </span>
+
+          <strong class="stat-value">
+            {{ formatCurrency(averageDonation) }}
+          </strong>
+
+          <span class="stat-caption">
+            Per successful donation
+          </span>
+        </div>
+      </section>
+
+      <div class="details-layout">
+        <section class="details-card">
+          <div class="card-heading">
+            <div>
+              <h2>
+                Contact Information
+              </h2>
+
+              <p>
+                Donor contact and location details.
+              </p>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">
+                First Name
+              </span>
+
+              <span class="detail-value">
+                {{ donor.first_name || '—' }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Last Name
+              </span>
+
+              <span class="detail-value">
+                {{ donor.last_name || '—' }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Email
+              </span>
+
+              <span class="detail-value">
+                {{ donor.email || '—' }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Phone
+              </span>
+
+              <span class="detail-value">
+                {{ donor.phone || '—' }}
+              </span>
+            </div>
+
+            <div class="detail-item full-width">
+              <span class="detail-label">
+                Address
+              </span>
+
+              <span class="detail-value">
+                {{ fullAddress }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section class="details-card">
+          <div class="card-heading">
+            <div>
+              <h2>
+                Donor Information
+              </h2>
+
+              <p>
+                Additional donor details.
+              </p>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">
+                Donor Type
+              </span>
+
+              <span class="detail-value">
+                {{ getDonorTypeLabel() }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Status
+              </span>
+
+              <span class="detail-value">
+                {{ donor.is_active ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                PAN Number
+              </span>
+
+              <span class="detail-value">
+                {{ donor.pan_number || '—' }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">
+                Anonymous
+              </span>
+
+              <span class="detail-value">
+                {{ donor.is_anonymous ? 'Yes' : 'No' }}
+              </span>
+            </div>
+
+            @if (donor.notes) {
+              <div class="detail-item full-width">
+                <span class="detail-label">
+                  Notes
+                </span>
+
+                <span class="detail-value notes">
+                  {{ donor.notes }}
+                </span>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+
+      <section class="donations-card">
+        <div class="card-heading donations-heading">
+          <div>
+            <h2>
+              Donation History
+            </h2>
+
+            <p>
+              Contributions made by this donor.
+            </p>
+          </div>
+
+          <span class="donation-count">
+            {{ donations.length }}
+            transaction{{ donations.length === 1 ? '' : 's' }}
+          </span>
+        </div>
+
+        @if (donationsLoading) {
+          <div class="inline-loading">
+            Loading donation history...
+          </div>
+        }
+
+        @if (!donationsLoading && donations.length === 0) {
+          <div class="no-donations">
+            <div class="empty-icon">
+              ₹
+            </div>
+
+            <h3>
+              No donations yet
+            </h3>
+
+            <p>
+              This donor does not have any recorded
+              donations.
+            </p>
+          </div>
+        }
+
+        @if (!donationsLoading && donations.length > 0) {
+          <div class="donations-table-wrapper">
+            <table class="donations-table">
+              <thead>
+                <tr>
+                  <th>
+                    Date
+                  </th>
+
+                  <th>
+                    Amount
+                  </th>
+
+                  <th>
+                    Payment Method
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                  <th>
+                    Transaction ID
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (
+                  donation of donations;
+                  track donation.id
+                ) {
+                  <tr>
+                    <td>
+                      <span class="date-value">
+                        {{
+                          donation.donated_at
+                            | date: 'dd MMM yyyy'
+                        }}
+                      </span>
+
+                      <span class="time-value">
+                        {{
+                          donation.donated_at
+                            | date: 'hh:mm a'
+                        }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <strong class="amount-value">
+                        {{
+                          formatCurrency(
+                            donation.amount
+                          )
+                        }}
+                      </strong>
+                    </td>
+
+                    <td>
+                      <span class="payment-method">
+                        {{
+                          donation.payment_method
+                            ? (
+                                donation.payment_method
+                                  .replace('_', ' ')
+                                  | titlecase
+                              )
+                            : '—'
+                        }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span
+                        class="payment-status"
+                        [class.successful]="
+                          donation.payment_status ===
+                          'successful'
+                        "
+                        [class.pending]="
+                          donation.payment_status ===
+                          'pending'
+                        "
+                        [class.failed]="
+                          donation.payment_status ===
+                          'failed'
+                        "
+                        [class.refunded]="
+                          donation.payment_status ===
+                          'refunded'
+                        "
+                      >
+                        {{
+                          getDonationStatusLabel(
+                            donation.payment_status
+                          )
+                        }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="transaction-id">
+                        {{
+                          donation.transaction_id ||
+                          donation.payment_reference ||
+                          '—'
+                        }}
+                      </span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </section>
+
+      <section class="bottom-actions">
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="goBack()"
+        >
+          ← Back to Donors
+        </button>
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="editDonor()"
+        >
+          Edit Donor
+        </button>
+      </section>
+    }
+  </main>
+</div>

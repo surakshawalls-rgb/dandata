@@ -1,0 +1,475 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.register-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+  padding: 24px;
+
+  background: #f9fafb;
+
+  box-sizing: border-box;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 500px;
+
+  padding: 36px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.06);
+
+  box-sizing: border-box;
+}
+
+/* Brand */
+
+.register-card__brand {
+  margin-bottom: 28px;
+
+  text-align: center;
+}
+
+.register-card__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+
+  margin: 0 auto 12px;
+
+  border-radius: 14px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.register-card__brand h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.register-card__brand p {
+  margin: 6px 0 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+/* Header */
+
+.register-card__header {
+  margin-bottom: 24px;
+}
+
+.register-card__header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.register-card__header p {
+  margin: 6px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+/* Messages */
+
+.register-card__error,
+.register-card__success {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+  padding: 12px 14px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.register-card__error {
+  border: 1px solid #fecaca;
+
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.register-card__success {
+  border: 1px solid #bbf7d0;
+
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.register-card__error-icon,
+.register-card__success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.register-card__error-icon {
+  background: #dc2626;
+}
+
+.register-card__success-icon {
+  background: #16a34a;
+}
+
+/* Form */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.register-form__row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px;
+}
+
+.register-form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form__field > label {
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.register-form__field > input,
+.register-form__password {
+  width: 100%;
+  min-height: 44px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.register-form__field > input {
+  padding: 10px 12px;
+
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.register-form__field > input:focus,
+.register-form__password:focus-within {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(37, 99, 235, 0.12);
+}
+
+.register-form__field > input::placeholder,
+.register-form__password input::placeholder {
+  color: #9ca3af;
+}
+
+.register-form__field > input:disabled,
+.register-form__password input:disabled {
+  background: #f9fafb;
+
+  cursor: not-allowed;
+
+  opacity: 0.7;
+}
+
+/* Password */
+
+.register-form__password {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+.register-form__password input {
+  flex: 1;
+
+  width: 100%;
+  min-width: 0;
+
+  min-height: 42px;
+
+  padding: 10px 48px 10px 12px;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  box-sizing: border-box;
+}
+
+.register-form__password-toggle {
+  position: absolute;
+
+  right: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: transparent;
+  color: #6b7280;
+
+  cursor: pointer;
+}
+
+.register-form__password-toggle:hover:not(:disabled) {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.register-form__password-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.register-form__password-toggle:focus-visible {
+  outline: 2px solid #93c5fd;
+
+  outline-offset: 1px;
+}
+
+.register-form__password-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.register-form__hint {
+  margin-top: 6px;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+/* Submit */
+
+.register-form__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  width: 100%;
+  min-height: 46px;
+
+  margin-top: 4px;
+
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease,
+    opacity 0.2s ease;
+}
+
+.register-form__submit:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.register-form__submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.register-form__submit:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.65;
+}
+
+.register-form__submit:focus-visible {
+  outline: 2px solid #93c5fd;
+
+  outline-offset: 2px;
+}
+
+.register-form__spinner {
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid
+    rgba(255, 255, 255, 0.4);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation:
+    register-spin 0.7s linear infinite;
+}
+
+/* Login link */
+
+.register-card__login {
+  display: flex;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 24px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+.register-card__login-link {
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+  color: #2563eb;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.register-card__login-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.register-card__login-link:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.register-card__login-link:focus-visible {
+  outline: 2px solid #93c5fd;
+
+  outline-offset: 2px;
+}
+
+/* Animation */
+
+@keyframes register-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .register-page {
+    align-items: flex-start;
+
+    padding: 16px;
+  }
+
+  .register-card {
+    margin-top: 24px;
+
+    padding: 28px 20px;
+  }
+
+  .register-form__row {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-form__spinner {
+    animation: none;
+  }
+}

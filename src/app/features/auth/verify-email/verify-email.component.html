@@ -1,0 +1,169 @@
+<div class="verify-email-page">
+  <div class="verify-email-card">
+
+    <!-- Brand -->
+    <div class="verify-email-card__brand">
+      <div class="verify-email-card__logo">
+        D
+      </div>
+
+      <h1>Daandata</h1>
+
+      <p>
+        Donation management made simple.
+      </p>
+    </div>
+
+    <!-- Verification icon -->
+    <div
+      class="verify-email-card__icon"
+      [class.verify-email-card__icon--verified]="verified"
+    >
+      @if (verified) {
+        ✓
+      } @else {
+        @
+      }
+    </div>
+
+    <!-- Header -->
+    <div class="verify-email-card__header">
+      @if (verified) {
+        <h2>Email verified!</h2>
+
+        <p>
+          Your email address has been verified
+          successfully.
+        </p>
+      } @else {
+        <h2>Verify your email</h2>
+
+        <p>
+          Please verify your email address to
+          continue using your Daandata account.
+        </p>
+      }
+    </div>
+
+    <!-- Error -->
+    @if (errorMessage) {
+      <div
+        class="verify-email-card__error"
+        role="alert"
+      >
+        <span class="verify-email-card__error-icon">
+          !
+        </span>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+      </div>
+    }
+
+    <!-- Success -->
+    @if (successMessage) {
+      <div
+        class="verify-email-card__success"
+        role="status"
+      >
+        <span class="verify-email-card__success-icon">
+          ✓
+        </span>
+
+        <span>
+          {{ successMessage }}
+        </span>
+      </div>
+    }
+
+    @if (!verified) {
+
+      <!-- Check status -->
+      <button
+        type="button"
+        class="verify-email-card__check"
+        [disabled]="checking"
+        (click)="checkVerification()"
+      >
+        @if (checking) {
+          <span
+            class="verify-email-card__spinner"
+            aria-hidden="true"
+          ></span>
+
+          <span>
+            Checking...
+          </span>
+        } @else {
+          <span>
+            I've Verified My Email
+          </span>
+        }
+      </button>
+
+      <div class="verify-email-card__divider">
+        <span>or</span>
+      </div>
+
+      <!-- Resend -->
+      <form
+        class="verify-email-form"
+        (ngSubmit)="resendVerification()"
+      >
+
+        <div class="verify-email-form__field">
+          <label for="email">
+            Email address
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            [disabled]="loading"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="verify-email-form__submit"
+          [disabled]="loading"
+        >
+          @if (loading) {
+            <span
+              class="verify-email-form__spinner"
+              aria-hidden="true"
+            ></span>
+
+            <span>
+              Sending...
+            </span>
+          } @else {
+            <span>
+              Resend Verification Email
+            </span>
+          }
+        </button>
+
+      </form>
+    }
+
+    <!-- Login -->
+    <div class="verify-email-card__login">
+      <button
+        type="button"
+        class="verify-email-card__login-link"
+        [disabled]="loading || checking"
+        (click)="goToLogin()"
+      >
+        ← Back to Sign In
+      </button>
+    </div>
+
+  </div>
+</div>

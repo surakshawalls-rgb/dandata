@@ -1,0 +1,317 @@
+<div class="home-page">
+
+  <!-- ==============================
+       HEADER
+       ============================== -->
+
+  <header class="site-header">
+
+    <div class="header-inner">
+
+      <a
+        class="brand"
+        routerLink="/home"
+      >
+        <span class="brand-mark">
+          D
+        </span>
+
+        <span class="brand-name">
+          Daandata
+        </span>
+      </a>
+
+
+      <nav class="navigation">
+
+        <button
+          type="button"
+          class="nav-link active"
+          (click)="viewDonations()"
+        >
+          Donations
+        </button>
+
+        <button
+          type="button"
+          class="nav-link"
+          (click)="viewTeam()"
+        >
+          Team
+        </button>
+
+        <button
+          type="button"
+          class="admin-link"
+          (click)="adminLogin()"
+        >
+          Admin Login
+        </button>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <!-- ==============================
+         HERO
+         ============================== -->
+
+    <section class="hero-section">
+
+      <div class="hero-content">
+
+        <p class="eyebrow">
+          श्री विश्वकर्मा मंदिर एवं सेवा समिति
+        </p>
+
+        <h1>
+          पूजा से सेवा तक,
+          <span>एक सतत संकल्प।</span>
+        </h1>
+
+        <p class="hero-description">
+          हर वर्ष श्री विश्वकर्मा पूजा के साथ
+          मंदिर निर्माण और समाज सेवा की दिशा में
+          एक कदम आगे बढ़ाने का हमारा संकल्प है।
+        </p>
+
+
+        <div class="hero-actions">
+
+          <button
+            type="button"
+            class="primary-button"
+            (click)="viewDonations()"
+          >
+            दान देखें
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-card">
+
+        <div class="hero-card-icon">
+          ♥
+        </div>
+
+        <h2>
+          पारदर्शिता हमारी प्राथमिकता
+        </h2>
+
+        <p>
+          हर दान का रिकॉर्ड रखा जाता है,
+          ताकि सहयोग और विश्वास दोनों बने रहें।
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         ABOUT
+         ============================== -->
+
+    <section class="about-section">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          हमारे बारे में
+        </p>
+
+        <h2>
+          श्री विश्वकर्मा मंदिर एवं सेवा समिति
+        </h2>
+
+      </div>
+
+
+      <div class="about-content">
+
+        <p>
+          हमारा उद्देश्य केवल हर वर्ष विश्वकर्मा पूजा
+          आयोजित करना नहीं, बल्कि धीरे-धीरे
+          श्री विश्वकर्मा मंदिर का निर्माण करना है।
+        </p>
+
+        <p>
+          पूजा के बाद उपलब्ध शेष राशि को
+          मंदिर निर्माण में लगाया जाएगा और
+          भविष्य में उपलब्ध संसाधनों के अनुसार
+          समाज सेवा के कार्य किए जाएंगे।
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         OUR PURPOSE
+         ============================== -->
+
+    <section class="purpose-section">
+
+      <div class="section-heading">
+
+        <p class="eyebrow">
+          हमारा संकल्प
+        </p>
+
+        <h2>
+          साथ मिलकर आगे बढ़ना
+        </h2>
+
+      </div>
+
+
+      <div class="purpose-grid">
+
+        <div class="purpose-card">
+
+          <div class="purpose-number">
+            01
+          </div>
+
+          <h3>
+            पूजा
+          </h3>
+
+          <p>
+            हर वर्ष श्रद्धा और सहभागिता के साथ
+            श्री विश्वकर्मा पूजा का आयोजन।
+          </p>
+
+        </div>
+
+
+        <div class="purpose-card">
+
+          <div class="purpose-number">
+            02
+          </div>
+
+          <h3>
+            मंदिर निर्माण
+          </h3>
+
+          <p>
+            उपलब्ध शेष राशि से चरणबद्ध रूप से
+            श्री विश्वकर्मा मंदिर का निर्माण।
+          </p>
+
+        </div>
+
+
+        <div class="purpose-card">
+
+          <div class="purpose-number">
+            03
+          </div>
+
+          <h3>
+            समाज सेवा
+          </h3>
+
+          <p>
+            मंदिर निर्माण के बाद उपलब्ध संसाधनों
+            के अनुसार जनसेवा के कार्य।
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         TRANSPARENCY
+         ============================== -->
+
+    <section class="donation-section">
+
+      <div class="donation-content">
+
+        <p class="eyebrow">
+          पारदर्शिता
+        </p>
+
+        <h2>
+          आपके सहयोग का स्पष्ट रिकॉर्ड
+        </h2>
+
+        <p>
+          समिति द्वारा प्राप्त सफल दान और
+          उनके रिकॉर्ड को देखें।
+        </p>
+
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="viewDonations()"
+        >
+          दान रिकॉर्ड देखें
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ==============================
+       FOOTER
+       ============================== -->
+
+  <footer class="site-footer">
+
+    <div class="footer-inner">
+
+      <div class="footer-copy">
+
+        <span>
+          © 2026 Daandata
+        </span>
+
+        <span>
+          श्री विश्वकर्मा मंदिर एवं सेवा समिति
+        </span>
+
+      </div>
+
+
+      <div class="developer-credit">
+
+        <span>
+          Designed and developed by
+        </span>
+
+        <a
+          href="https://www.surakshawalls.space/software"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <strong>
+            Suraksha Software
+          </strong>
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+</div>

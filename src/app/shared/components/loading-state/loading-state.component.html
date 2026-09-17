@@ -1,0 +1,20 @@
+<div
+  class="loading-state"
+  [class.loading-state--compact]="compact"
+>
+  <div
+    class="loading-state__spinner"
+    role="status"
+    aria-label="Loading"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  @if (showMessage) {
+    <p class="loading-state__message">
+      {{ message }}
+    </p>
+  }
+</div>

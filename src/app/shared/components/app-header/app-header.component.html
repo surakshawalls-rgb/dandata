@@ -1,0 +1,84 @@
+<header class="app-header">
+  <div class="header-left">
+    @if (showBackButton) {
+      <button
+        type="button"
+        class="icon-button"
+        aria-label="Go back"
+        (click)="onBackClick()"
+      >
+        <span class="icon">‹</span>
+      </button>
+    }
+
+    @if (showMenuButton && !showBackButton) {
+      <button
+        type="button"
+        class="icon-button"
+        aria-label="Open menu"
+        (click)="onMenuClick()"
+      >
+        <span class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    }
+
+    <div class="title-container">
+      <h1>{{ title }}</h1>
+
+      @if (subtitle) {
+        <p>{{ subtitle }}</p>
+      }
+    </div>
+  </div>
+
+  <div class="header-right">
+    @if (showNotificationButton) {
+      <button
+        type="button"
+        class="icon-button notification-button"
+        aria-label="Notifications"
+        (click)="onNotificationsClick()"
+      >
+        <span class="bell-icon">♢</span>
+
+        @if (notificationCount > 0) {
+          <span class="notification-badge">
+            {{
+              notificationCount > 99
+                ? '99+'
+                : notificationCount
+            }}
+          </span>
+        }
+      </button>
+    }
+
+    @if (userName) {
+      <button
+        type="button"
+        class="profile-button"
+        aria-label="Open profile"
+        (click)="onProfileClick()"
+      >
+        @if (userAvatarUrl) {
+          <img
+            [src]="userAvatarUrl"
+            [alt]="userName"
+          />
+        } @else {
+          <span class="avatar">
+            {{ initials }}
+          </span>
+        }
+
+        <span class="user-name">
+          {{ userName }}
+        </span>
+      </button>
+    }
+  </div>
+</header>

@@ -1,0 +1,246 @@
+<div class="settings-page">
+  <app-header
+    [userName]="userName"
+    [notificationCount]="0"
+    (dashboardClicked)="goToDashboard()"
+    (notificationsClicked)="goToNotifications()"
+    (profileClicked)="goToProfile()"
+    (logoutClicked)="logout()"
+  ></app-header>
+
+  <main class="page-content">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">PREFERENCES</p>
+
+        <h1>Settings</h1>
+
+        <p class="page-description">
+          Configure your Daandata application preferences.
+        </p>
+      </div>
+    </section>
+
+    @if (successMessage) {
+      <div class="message success-message">
+        <span class="message-icon">✓</span>
+
+        <span>
+          {{ successMessage }}
+        </span>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="message error-message">
+        <span class="message-icon">!</span>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+      </div>
+    }
+
+    <div class="settings-layout">
+      <section class="settings-card">
+        <div class="card-header">
+          <div class="section-icon">🔔</div>
+
+          <div>
+            <h2>Notifications</h2>
+
+            <p>
+              Choose which notifications you want to receive.
+            </p>
+          </div>
+        </div>
+
+        <div class="settings-list">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Email Notifications</h3>
+
+              <p>
+                Receive important account and system updates by email.
+              </p>
+            </div>
+
+            <label class="toggle">
+              <input
+                type="checkbox"
+                [(ngModel)]="emailNotifications"
+              />
+
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Donation Notifications</h3>
+
+              <p>
+                Get notified when donations are received or updated.
+              </p>
+            </div>
+
+            <label class="toggle">
+              <input
+                type="checkbox"
+                [(ngModel)]="donationNotifications"
+              />
+
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Campaign Notifications</h3>
+
+              <p>
+                Receive updates related to your fundraising campaigns.
+              </p>
+            </div>
+
+            <label class="toggle">
+              <input
+                type="checkbox"
+                [(ngModel)]="campaignNotifications"
+              />
+
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <div class="card-header">
+          <div class="section-icon">⚙</div>
+
+          <div>
+            <h2>Application Preferences</h2>
+
+            <p>
+              Customize how information is displayed in Daandata.
+            </p>
+          </div>
+        </div>
+
+        <div class="settings-list">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>Compact Tables</h3>
+
+              <p>
+                Use a more compact layout when displaying data tables.
+              </p>
+            </div>
+
+            <label class="toggle">
+              <input
+                type="checkbox"
+                [(ngModel)]="compactTables"
+              />
+
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item select-item">
+            <div class="setting-info">
+              <h3>Default Currency</h3>
+
+              <p>
+                Currency used when displaying donation amounts.
+              </p>
+            </div>
+
+            <select
+              [(ngModel)]="defaultCurrency"
+              name="defaultCurrency"
+            >
+              <option value="INR">INR — Indian Rupee</option>
+              <option value="USD">USD — US Dollar</option>
+              <option value="EUR">EUR — Euro</option>
+              <option value="GBP">GBP — British Pound</option>
+            </select>
+          </div>
+
+          <div class="setting-item select-item">
+            <div class="setting-info">
+              <h3>Date Format</h3>
+
+              <p>
+                Choose how dates are displayed throughout the application.
+              </p>
+            </div>
+
+            <select
+              [(ngModel)]="dateFormat"
+              name="dateFormat"
+            >
+              <option value="DD MMM YYYY">
+                16 Sep 2026
+              </option>
+
+              <option value="MMM DD, YYYY">
+                Sep 16, 2026
+              </option>
+
+              <option value="YYYY-MM-DD">
+                2026-09-16
+              </option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card danger-card">
+        <div class="card-header">
+          <div class="section-icon reset-icon">↺</div>
+
+          <div>
+            <h2>Reset Preferences</h2>
+
+            <p>
+              Restore all application preferences to their default values.
+            </p>
+          </div>
+        </div>
+
+        <div class="reset-content">
+          <p>
+            This will reset your notification and display preferences.
+            Your account, campaigns, donors, and donations will not be affected.
+          </p>
+
+          <button
+            type="button"
+            class="reset-button"
+            (click)="resetSettings()"
+          >
+            Restore Defaults
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="page-actions">
+      <button
+        type="button"
+        class="save-button"
+        [disabled]="saving"
+        (click)="saveSettings()"
+      >
+        @if (saving) {
+          <span class="button-spinner"></span>
+          Saving...
+        } @else {
+          Save Settings
+        }
+      </button>
+    </div>
+  </main>
+</div>

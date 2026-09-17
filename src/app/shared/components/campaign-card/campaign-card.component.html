@@ -1,0 +1,152 @@
+<article
+  class="campaign-card"
+  role="button"
+  tabindex="0"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+>
+  @if (campaign.image_url) {
+    <div class="campaign-image">
+      <img
+        [src]="campaign.image_url"
+        [alt]="campaign.title"
+      />
+    </div>
+  } @else {
+    <div class="campaign-image placeholder">
+      <span>Campaign</span>
+    </div>
+  }
+
+  <div class="campaign-content">
+    <div class="campaign-header">
+      <div class="campaign-title-section">
+        <h3>
+          {{ campaign.title }}
+        </h3>
+
+        @if (campaign.short_description) {
+          <p>
+            {{ campaign.short_description }}
+          </p>
+        }
+      </div>
+
+      <span
+        class="status"
+        [class.active]="
+          campaign.status === 'active'
+        "
+        [class.paused]="
+          campaign.status === 'paused'
+        "
+        [class.completed]="
+          campaign.status === 'completed'
+        "
+        [class.cancelled]="
+          campaign.status === 'cancelled'
+        "
+        [class.draft]="
+          campaign.status === 'draft'
+        "
+      >
+        {{ campaign.status }}
+      </span>
+    </div>
+
+    @if (showProgress) {
+      <div class="progress-section">
+        <div class="progress-header">
+          <span>
+            {{ formattedRaised }}
+            raised
+          </span>
+
+          <span>
+            {{ progressPercentage | number:'1.0-0' }}%
+          </span>
+        </div>
+
+        <div
+          class="progress-track"
+          role="progressbar"
+          [attr.aria-valuenow]="progressPercentage"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div
+            class="progress-bar"
+            [style.width.%]="
+              progressPercentage
+            "
+          ></div>
+        </div>
+
+        <div class="goal">
+          Goal:
+          {{ formattedGoal }}
+        </div>
+      </div>
+    }
+
+    <div class="campaign-meta">
+      @if (campaign.end_date) {
+        <div class="meta-item">
+          <span class="meta-label">
+            Ends
+          </span>
+
+          <span class="meta-value">
+            {{ campaign.end_date | date:'mediumDate' }}
+          </span>
+        </div>
+      }
+
+      <div class="meta-item">
+        <span class="meta-label">
+          Remaining
+        </span>
+
+        <span class="meta-value">
+          {{ formattedRemaining }}
+        </span>
+      </div>
+    </div>
+
+    <div class="campaign-footer">
+      @if (campaign.is_featured) {
+        <span class="featured">
+          Featured
+        </span>
+      }
+
+      <span class="visibility">
+        {{
+          campaign.is_public
+            ? 'Public'
+            : 'Private'
+        }}
+      </span>
+
+      @if (showActions) {
+        <div class="actions">
+          <button
+            type="button"
+            class="action-button"
+            (click)="onEditClick($event)"
+          >
+            Edit
+          </button>
+
+          <button
+            type="button"
+            class="action-button danger"
+            (click)="onDeleteClick($event)"
+          >
+            Delete
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</article>

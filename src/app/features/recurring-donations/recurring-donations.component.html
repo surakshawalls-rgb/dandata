@@ -1,0 +1,358 @@
+<div class="recurring-donations-page">
+  <app-header
+    [userName]="userName"
+    [notificationCount]="0"
+    (dashboardClicked)="goToDashboard()"
+    (notificationsClicked)="goToNotifications()"
+    (profileClicked)="goToProfile()"
+    (logoutClicked)="logout()"
+  />
+
+  <main class="page-content">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">DONATIONS</p>
+        <h1>Recurring Donations</h1>
+        <p class="page-description">
+          Manage scheduled and recurring donor contributions.
+        </p>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Total Recurring</span>
+        <strong class="stat-value">
+          {{ totalCount }}
+        </strong>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-label">Active</span>
+        <strong class="stat-value">
+          {{ activeCount }}
+        </strong>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-label">Paused</span>
+        <strong class="stat-value">
+          {{ pausedCount }}
+        </strong>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-label">Cancelled</span>
+        <strong class="stat-value">
+          {{ cancelledCount }}
+        </strong>
+      </div>
+    </section>
+
+    <section class="filters-card">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+
+        <input
+          type="text"
+          placeholder="Search recurring donations..."
+          [value]="searchTerm"
+          (input)="searchTerm = $any($event.target).value"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="statusFilter">
+          Status
+        </label>
+
+        <select
+          id="statusFilter"
+          [value]="statusFilter"
+          (change)="
+            statusFilter =
+              $any($event.target).value
+          "
+        >
+          <option value="all">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="paused">Paused</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="completed">Completed</option>
+          <option value="failed">Failed</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="frequencyFilter">
+          Frequency
+        </label>
+
+        <select
+          id="frequencyFilter"
+          [value]="frequencyFilter"
+          (change)="
+            frequencyFilter =
+              $any($event.target).value
+          "
+        >
+          <option value="all">All Frequencies</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
+
+      @if (
+        searchTerm ||
+        statusFilter !== 'all' ||
+        frequencyFilter !== 'all'
+      ) {
+        <button
+          type="button"
+          class="clear-button"
+          (click)="clearFilters()"
+        >
+          Clear
+        </button>
+      }
+    </section>
+
+    @if (loading) {
+      <app-loading-state
+        message="Loading recurring donations..."
+      />
+    } @else if (errorMessage) {
+      <app-error-state
+        [message]="errorMessage"
+        (retryClicked)="retryLoad()"
+      />
+    } @else if (
+      filteredRecurringDonations.length === 0
+    ) {
+      <app-empty-state
+        title="No recurring donations found"
+        message="Recurring donation plans will appear here when they are created."
+      />
+    } @else {
+      <section class="table-card">
+        <div class="table-header">
+          <div>
+            <h2>Recurring Plans</h2>
+            <p>
+              {{ filteredRecurringDonations.length }}
+              plan{{
+                filteredRecurringDonations.length === 1
+                  ? ''
+                  : 's'
+              }}
+            </p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Frequency</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Next Payment</th>
+                <th>Start Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (
+                recurringDonation of filteredRecurringDonations;
+                track recurringDonation.id
+              ) {
+                <tr>
+                  <td>
+                    <div class="amount-cell">
+                      <strong>
+                        {{
+                          formatCurrency(
+                            recurringDonation.amount,
+                            recurringDonation.currency
+                          )
+                        }}
+                      </strong>
+                      <span>
+                        {{ recurringDonation.id.slice(0, 8) }}...
+                      </span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <span class="frequency-badge">
+                      {{
+                        getFrequencyLabel(
+                          recurringDonation.frequency
+                        )
+                      }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span
+                      class="status-badge"
+                      [class.status-active]="
+                        recurringDonation.status === 'active'
+                      "
+                      [class.status-paused]="
+                        recurringDonation.status === 'paused'
+                      "
+                      [class.status-cancelled]="
+                        recurringDonation.status === 'cancelled'
+                      "
+                      [class.status-completed]="
+                        recurringDonation.status === 'completed'
+                      "
+                      [class.status-failed]="
+                        recurringDonation.status === 'failed'
+                      "
+                    >
+                      {{
+                        getStatusLabel(
+                          recurringDonation.status
+                        )
+                      }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="payment-cell">
+                      <strong>
+                        {{
+                          getPaymentMethodLabel(
+                            recurringDonation.payment_method
+                          )
+                        }}
+                      </strong>
+
+                      @if (
+                        recurringDonation.provider
+                      ) {
+                        <span>
+                          {{ recurringDonation.provider }}
+                        </span>
+                      }
+                    </div>
+                  </td>
+
+                  <td>
+                    @if (
+                      recurringDonation.next_payment_date
+                    ) {
+                      <span class="date-primary">
+                        {{
+                          recurringDonation.next_payment_date
+                            | date: 'dd MMM yyyy'
+                        }}
+                      </span>
+                    } @else {
+                      <span class="muted">
+                        —
+                      </span>
+                    }
+                  </td>
+
+                  <td>
+                    <span class="date-primary">
+                      {{
+                        recurringDonation.start_date
+                          | date: 'dd MMM yyyy'
+                      }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="actions">
+                      @if (
+                        recurringDonation.status === 'active'
+                      ) {
+                        <button
+                          type="button"
+                          class="action-button pause"
+                          [disabled]="
+                            actionLoadingId ===
+                            recurringDonation.id
+                          "
+                          (click)="
+                            pause(recurringDonation)
+                          "
+                        >
+                          {{
+                            actionLoadingId ===
+                            recurringDonation.id
+                              ? '...'
+                              : 'Pause'
+                          }}
+                        </button>
+                      }
+
+                      @if (
+                        recurringDonation.status === 'paused'
+                      ) {
+                        <button
+                          type="button"
+                          class="action-button resume"
+                          [disabled]="
+                            actionLoadingId ===
+                            recurringDonation.id
+                          "
+                          (click)="
+                            resume(recurringDonation)
+                          "
+                        >
+                          {{
+                            actionLoadingId ===
+                            recurringDonation.id
+                              ? '...'
+                              : 'Resume'
+                          }}
+                        </button>
+                      }
+
+                      @if (
+                        recurringDonation.status === 'active' ||
+                        recurringDonation.status === 'paused'
+                      ) {
+                        <button
+                          type="button"
+                          class="action-button cancel"
+                          [disabled]="
+                            actionLoadingId ===
+                            recurringDonation.id
+                          "
+                          (click)="
+                            cancel(recurringDonation)
+                          "
+                        >
+                          Cancel
+                        </button>
+                      }
+
+                      @if (
+                        recurringDonation.status !== 'active' &&
+                        recurringDonation.status !== 'paused'
+                      ) {
+                        <span class="no-action">
+                          —
+                        </span>
+                      }
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    }
+  </main>
+</div>

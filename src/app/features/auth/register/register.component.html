@@ -1,0 +1,335 @@
+<div class="register-page">
+  <div class="register-card">
+
+    <!-- Brand -->
+    <div class="register-card__brand">
+      <div class="register-card__logo">
+        D
+      </div>
+
+      <h1>Daandata</h1>
+
+      <p>
+        Donation management made simple.
+      </p>
+    </div>
+
+    <!-- Header -->
+    <div class="register-card__header">
+      <h2>Create your account</h2>
+
+      <p>
+        Get started with Daandata today.
+      </p>
+    </div>
+
+    <!-- Error -->
+    @if (errorMessage) {
+      <div
+        class="register-card__error"
+        role="alert"
+      >
+        <span class="register-card__error-icon">
+          !
+        </span>
+
+        <span>
+          {{ errorMessage }}
+        </span>
+      </div>
+    }
+
+    <!-- Success -->
+    @if (successMessage) {
+      <div
+        class="register-card__success"
+        role="status"
+      >
+        <span class="register-card__success-icon">
+          ✓
+        </span>
+
+        <span>
+          {{ successMessage }}
+        </span>
+      </div>
+    }
+
+    <!-- Form -->
+    <form
+      class="register-form"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <!-- Name -->
+      <div class="register-form__row">
+
+        <div class="register-form__field">
+          <label for="first-name">
+            First name
+          </label>
+
+          <input
+            id="first-name"
+            type="text"
+            name="firstName"
+            [(ngModel)]="firstName"
+            placeholder="First name"
+            autocomplete="given-name"
+            [disabled]="loading"
+            required
+          />
+        </div>
+
+        <div class="register-form__field">
+          <label for="last-name">
+            Last name
+          </label>
+
+          <input
+            id="last-name"
+            type="text"
+            name="lastName"
+            [(ngModel)]="lastName"
+            placeholder="Last name"
+            autocomplete="family-name"
+            [disabled]="loading"
+          />
+        </div>
+
+      </div>
+
+      <!-- Email -->
+      <div class="register-form__field">
+        <label for="email">
+          Email address
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          [disabled]="loading"
+          required
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="register-form__field">
+        <label for="password">
+          Password
+        </label>
+
+        <div class="register-form__password">
+
+          <input
+            id="password"
+            [type]="
+              showPassword
+                ? 'text'
+                : 'password'
+            "
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Create a password"
+            autocomplete="new-password"
+            [disabled]="loading"
+            required
+          />
+
+          <button
+            type="button"
+            class="register-form__password-toggle"
+            [attr.aria-label]="
+              showPassword
+                ? 'Hide password'
+                : 'Show password'
+            "
+            [disabled]="loading"
+            (click)="togglePasswordVisibility()"
+          >
+            @if (showPassword) {
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                ></path>
+
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="3"
+                ></circle>
+              </svg>
+            } @else {
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 3l18 18"></path>
+
+                <path
+                  d="M10.6 10.6a2 2 0 0 0 2.8 2.8"
+                ></path>
+
+                <path
+                  d="M9.9 5.2A10.5 10.5 0 0 1 12 5c6.5 0 10 7 10 7s-3.5 7-10 7c-1.5 0-2.8-.3-4-.8"
+                ></path>
+
+                <path
+                  d="M6.2 6.2C3.5 8.1 2 12 2 12s3.5 7 10 7c1.5 0 2.8-.3 4-.8"
+                ></path>
+              </svg>
+            }
+          </button>
+
+        </div>
+
+        <span class="register-form__hint">
+          Minimum 6 characters
+        </span>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="register-form__field">
+        <label for="confirm-password">
+          Confirm password
+        </label>
+
+        <div class="register-form__password">
+
+          <input
+            id="confirm-password"
+            [type]="
+              showConfirmPassword
+                ? 'text'
+                : 'password'
+            "
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm your password"
+            autocomplete="new-password"
+            [disabled]="loading"
+            required
+          />
+
+          <button
+            type="button"
+            class="register-form__password-toggle"
+            [attr.aria-label]="
+              showConfirmPassword
+                ? 'Hide password'
+                : 'Show password'
+            "
+            [disabled]="loading"
+            (click)="
+              toggleConfirmPasswordVisibility()
+            "
+          >
+            @if (showConfirmPassword) {
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                ></path>
+
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="3"
+                ></circle>
+              </svg>
+            } @else {
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 3l18 18"></path>
+
+                <path
+                  d="M10.6 10.6a2 2 0 0 0 2.8 2.8"
+                ></path>
+
+                <path
+                  d="M9.9 5.2A10.5 10.5 0 0 1 12 5c6.5 0 10 7 10 7s-3.5 7-10 7c-1.5 0-2.8-.3-4-.8"
+                ></path>
+
+                <path
+                  d="M6.2 6.2C3.5 6.2 2 12 2 12s3.5 7 10 7c1.5 0 2.8-.3 4-.8"
+                ></path>
+              </svg>
+            }
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="register-form__submit"
+        [disabled]="loading"
+      >
+        @if (loading) {
+          <span
+            class="register-form__spinner"
+            aria-hidden="true"
+          ></span>
+
+          <span>
+            Creating account...
+          </span>
+        } @else {
+          <span>
+            Create Account
+          </span>
+        }
+      </button>
+
+    </form>
+
+    <!-- Login -->
+    <div class="register-card__login">
+      <span>
+        Already have an account?
+      </span>
+
+      <button
+        type="button"
+        class="register-card__login-link"
+        [disabled]="loading"
+        (click)="goToLogin()"
+      >
+        Sign in
+      </button>
+    </div>
+
+  </div>
+</div>

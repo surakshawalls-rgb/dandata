@@ -1,0 +1,29 @@
+<div
+  class="error-state"
+  [class.error-state--compact]="compact"
+>
+  <div
+    class="error-state__icon"
+    aria-hidden="true"
+  >
+    {{ icon }}
+  </div>
+
+  <h3 class="error-state__title">
+    {{ title }}
+  </h3>
+
+  <p class="error-state__message">
+    {{ message }}
+  </p>
+
+  @if (actionLabel) {
+    <button
+      type="button"
+      class="error-state__button"
+      (click)="onRetryClick()"
+    >
+      {{ actionLabel }}
+    </button>
+  }
+</div>

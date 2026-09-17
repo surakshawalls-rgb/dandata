@@ -1,0 +1,48 @@
+<div class="search-bar">
+  <div class="search-bar__icon" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="11" cy="11" r="7"></circle>
+      <path d="m20 20-3.5-3.5"></path>
+    </svg>
+  </div>
+
+  <input
+    type="search"
+    class="search-bar__input"
+    [value]="value"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [autofocus]="autoFocus"
+    autocomplete="off"
+    (input)="onValueChange($any($event.target).value)"
+    (keyup.enter)="onSearch()"
+  />
+
+  @if (showClearButton && value) {
+    <button
+      type="button"
+      class="search-bar__clear"
+      aria-label="Clear search"
+      [disabled]="disabled"
+      (click)="onClear()"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <path d="M6 6l12 12"></path>
+        <path d="M18 6 6 18"></path>
+      </svg>
+    </button>
+  }
+</div>

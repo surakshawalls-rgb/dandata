@@ -1,0 +1,370 @@
+<div class="donation-page">
+
+  <!-- ==============================
+       ADMIN HEADER
+       ============================== -->
+
+  <header class="admin-header">
+
+    <div class="header-inner">
+
+      <a class="brand" href="/admin">
+
+        <span class="brand-mark">
+          D
+        </span>
+
+        <span class="brand-name">
+          Daandata
+        </span>
+
+        <span class="admin-badge">
+          Admin
+        </span>
+
+      </a>
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()"
+      >
+        ← डैशबोर्ड
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="page-main">
+
+    <!-- ==============================
+         PAGE HEADING
+         ============================== -->
+
+    <section class="page-heading">
+
+      <p class="eyebrow">
+        दान प्रविष्टि
+      </p>
+
+      <h1>
+        नया दान दर्ज करें
+      </h1>
+
+      <p>
+        श्री विश्वकर्मा मंदिर एवं सेवा समिति को प्राप्त
+        दान की जानकारी दर्ज करें।
+      </p>
+
+    </section>
+
+
+    <!-- ==============================
+         FORM CARD
+         ============================== -->
+
+    <section class="form-card">
+
+
+      <!-- ==============================
+           SUCCESS STATE
+           ============================== -->
+
+      @if (saved) {
+
+        <div class="success-box">
+
+          <div class="success-icon">
+            ✓
+          </div>
+
+          <div>
+
+            <h2>
+              दान सफलतापूर्वक दर्ज हो गया
+            </h2>
+
+            <p>
+              दान की जानकारी रिकॉर्ड में सुरक्षित कर दी गई है।
+              अब आप दान की पुष्टि दानदाता को WhatsApp पर भेज सकते हैं।
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="success-actions">
+
+          <button
+            type="button"
+            class="whatsapp-button"
+            (click)="openWhatsApp()"
+          >
+            WhatsApp पर भेजें
+          </button>
+
+          <button
+            type="button"
+            class="secondary-button"
+            (click)="goBack()"
+          >
+            डैशबोर्ड पर जाएँ
+          </button>
+
+        </div>
+
+      }
+
+
+      <!-- ==============================
+           DONATION FORM
+           ============================== -->
+
+      @if (!saved) {
+
+        @if (errorMessage) {
+
+          <div
+            class="error-box"
+            role="alert"
+          >
+            {{ errorMessage }}
+          </div>
+
+        }
+
+
+        <form
+          #donationForm="ngForm"
+          (ngSubmit)="saveDonation()"
+        >
+
+          <div class="form-grid">
+
+
+            <!-- ==============================
+                 DONOR NAME
+                 ============================== -->
+
+            <div class="form-field full-width">
+
+              <label for="donorName">
+
+                दानदाता का नाम
+
+                <span>*</span>
+
+              </label>
+
+              <input
+                id="donorName"
+                name="donorName"
+                type="text"
+                [(ngModel)]="form.donorName"
+                placeholder="दानदाता का नाम दर्ज करें"
+                autocomplete="name"
+                required
+              />
+
+            </div>
+
+
+            <!-- ==============================
+                 MOBILE
+                 ============================== -->
+
+            <div class="form-field">
+
+              <label for="mobile">
+
+                मोबाइल नंबर
+
+                <span>*</span>
+
+              </label>
+
+              <input
+                id="mobile"
+                name="mobile"
+                type="tel"
+                [(ngModel)]="form.mobile"
+                (input)="onMobileInput()"
+                placeholder="10 अंकों का मोबाइल नंबर"
+                autocomplete="tel"
+                inputmode="numeric"
+                pattern="[0-9]{10}"
+                minlength="10"
+                maxlength="10"
+                required
+              />
+
+              <small>
+                मोबाइल नंबर केवल 10 अंकों का होना चाहिए।
+              </small>
+
+            </div>
+
+
+            <!-- ==============================
+                 AMOUNT
+                 ============================== -->
+
+            <div class="form-field">
+
+              <label for="amount">
+
+                दान राशि
+
+                <span>*</span>
+
+              </label>
+
+              <div class="amount-input">
+
+                <span>
+                  ₹
+                </span>
+
+                <input
+                  id="amount"
+                  name="amount"
+                  type="text"
+                  [(ngModel)]="form.amount"
+                  (input)="onAmountInput()"
+                  placeholder="दान राशि"
+                  inputmode="numeric"
+                  pattern="[0-9]{1,5}"
+                  maxlength="5"
+                  required
+                />
+
+              </div>
+
+              <small>
+                दान राशि केवल 1 से 5 अंकों की होनी चाहिए।
+              </small>
+
+            </div>
+
+
+            <!-- ==============================
+                 ADDRESS
+                 ============================== -->
+
+            <div class="form-field full-width">
+
+              <label for="address">
+
+                पता
+
+                <span>*</span>
+
+              </label>
+
+              <textarea
+                id="address"
+                name="address"
+                [(ngModel)]="form.address"
+                placeholder="दानदाता का पता दर्ज करें"
+                rows="4"
+                autocomplete="street-address"
+                required
+              ></textarea>
+
+              <small>
+                यह जानकारी दान रिकॉर्ड के लिए सुरक्षित रखी जाएगी।
+              </small>
+
+            </div>
+
+
+            <!-- ==============================
+                 DONATION DATE
+                 ============================== -->
+
+            <div class="form-field">
+
+              <label for="donationDate">
+
+                दान की तारीख
+
+                <span>*</span>
+
+              </label>
+
+              <input
+                id="donationDate"
+                name="donationDate"
+                type="date"
+                [(ngModel)]="form.donationDate"
+                required
+              />
+
+            </div>
+
+          </div>
+
+
+          <!-- ==============================
+               FORM FOOTER
+               ============================== -->
+
+          <div class="form-footer">
+
+            <p>
+
+              <strong>*</strong>
+
+              चिन्हित सभी जानकारी आवश्यक है।
+
+            </p>
+
+
+            <div class="form-actions">
+
+              <button
+                type="button"
+                class="secondary-button"
+                (click)="goBack()"
+                [disabled]="saving"
+              >
+                रद्द करें
+              </button>
+
+
+              <button
+                type="submit"
+                class="primary-button"
+                [disabled]="saving || !donationForm.valid"
+              >
+
+                @if (saving) {
+
+                  <span class="button-spinner"></span>
+
+                  सुरक्षित किया जा रहा है...
+
+                } @else {
+
+                  दान सुरक्षित करें
+
+                }
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </form>
+
+      }
+
+    </section>
+
+  </main>
+
+</div>

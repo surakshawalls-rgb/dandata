@@ -1,0 +1,398 @@
+<div class="donations-page">
+  <app-header
+    title="Donations"
+    [userName]="userName"
+    [notificationCount]="0"
+    (notificationClicked)="openNotifications()"
+    (profileClicked)="openProfile()"
+    (logoutClicked)="logout()"
+  />
+
+  <main class="donations-content">
+    @if (loading) {
+      <app-loading-state
+        message="Loading donations..."
+      />
+    }
+
+    @if (!loading && errorMessage) {
+      <app-error-state
+        [message]="errorMessage"
+        (retryClicked)="loadDonations()"
+      />
+    }
+
+    @if (!loading && !errorMessage) {
+      <section class="page-intro">
+        <div>
+          <p class="eyebrow">
+            Donation management
+          </p>
+
+          <h1>
+            All Donations
+          </h1>
+
+          <p class="intro-text">
+            Track and manage donations received
+            by your organization.
+          </p>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <div class="summary-card">
+          <span class="summary-label">
+            Total Donations
+          </span>
+
+          <strong class="summary-value">
+            {{ donations.length }}
+          </strong>
+
+          <span class="summary-caption">
+            All recorded transactions
+          </span>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Successful
+          </span>
+
+          <strong class="summary-value">
+            {{ successfulCount }}
+          </strong>
+
+          <span class="summary-caption">
+            Completed payments
+          </span>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Pending
+          </span>
+
+          <strong class="summary-value">
+            {{ pendingCount }}
+          </strong>
+
+          <span class="summary-caption">
+            Awaiting confirmation
+          </span>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Total Collected
+          </span>
+
+          <strong class="summary-value">
+            {{ formatCurrency(totalSuccessfulAmount) }}
+          </strong>
+
+          <span class="summary-caption">
+            Successful donations
+          </span>
+        </div>
+      </section>
+
+      <section class="filters-section">
+        <div class="search-wrapper">
+          <span
+            class="search-icon"
+            aria-hidden="true"
+          >
+            ⌕
+          </span>
+
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search donor, email, transaction ID..."
+            [value]="searchTerm"
+            (input)="onSearchChange($any($event.target).value)"
+          />
+        </div>
+
+        <div class="filter-wrapper">
+          <label
+            class="filter-label"
+            for="donation-status"
+          >
+            Status
+          </label>
+
+          <select
+            id="donation-status"
+            class="filter-select"
+            [value]="statusFilter"
+            (change)="onStatusChange($event)"
+          >
+            <option value="all">
+              All Statuses
+            </option>
+
+            <option value="successful">
+              Successful
+            </option>
+
+            <option value="pending">
+              Pending
+            </option>
+
+            <option value="failed">
+              Failed
+            </option>
+
+            <option value="refunded">
+              Refunded
+            </option>
+
+            <option value="cancelled">
+              Cancelled
+            </option>
+          </select>
+        </div>
+
+        <div class="filter-wrapper">
+          <label
+            class="filter-label"
+            for="payment-method"
+          >
+            Payment Method
+          </label>
+
+          <select
+            id="payment-method"
+            class="filter-select"
+            [value]="paymentMethodFilter"
+            (change)="onPaymentMethodChange($event)"
+          >
+            <option value="all">
+              All Methods
+            </option>
+
+            <option value="upi">
+              UPI
+            </option>
+
+            <option value="card">
+              Card
+            </option>
+
+            <option value="netbanking">
+              Net Banking
+            </option>
+
+            <option value="wallet">
+              Wallet
+            </option>
+
+            <option value="bank_transfer">
+              Bank Transfer
+            </option>
+
+            <option value="cash">
+              Cash
+            </option>
+
+            <option value="other">
+              Other
+            </option>
+          </select>
+        </div>
+      </section>
+
+      @if (filteredDonations.length > 0) {
+        <section class="donations-card">
+          <div class="section-header">
+            <div>
+              <h2>
+                Donation Transactions
+              </h2>
+
+              <p>
+                Showing
+                {{ filteredDonations.length }}
+                transaction{{ filteredDonations.length === 1 ? '' : 's' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="donations-table-wrapper">
+            <table class="donations-table">
+              <thead>
+                <tr>
+                  <th>
+                    Donor
+                  </th>
+
+                  <th>
+                    Amount
+                  </th>
+
+                  <th>
+                    Payment
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                  <th>
+                    Date
+                  </th>
+
+                  <th>
+                    Transaction ID
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (
+                  donation of filteredDonations;
+                  track donation.id
+                ) {
+                  <tr
+                    class="donation-row"
+                    (click)="openDonation(donation)"
+                  >
+                    <td>
+                      <div class="donor-cell">
+                        <div class="donor-avatar">
+                          {{
+                            (
+                              donation.donor_name_snapshot ||
+                              'Anonymous'
+                            ).charAt(0).toUpperCase()
+                          }}
+                        </div>
+
+                        <div class="donor-info">
+                          <strong>
+                            {{
+                              donation.donor_name_snapshot ||
+                              'Anonymous Donor'
+                            }}
+                          </strong>
+
+                          @if (
+                            donation.donor_email_snapshot
+                          ) {
+                            <span>
+                              {{
+                                donation.donor_email_snapshot
+                              }}
+                            </span>
+                          }
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <strong class="amount-value">
+                        {{
+                          formatCurrency(
+                            donation.amount
+                          )
+                        }}
+                      </strong>
+                    </td>
+
+                    <td>
+                      <span class="payment-method">
+                        {{
+                          getPaymentMethodLabel(
+                            donation.payment_method
+                          )
+                        }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span
+                        class="payment-status"
+                        [class.successful]="
+                          donation.payment_status ===
+                          'successful'
+                        "
+                        [class.pending]="
+                          donation.payment_status ===
+                          'pending'
+                        "
+                        [class.failed]="
+                          donation.payment_status ===
+                          'failed'
+                        "
+                        [class.refunded]="
+                          donation.payment_status ===
+                          'refunded'
+                        "
+                        [class.cancelled]="
+                          donation.payment_status ===
+                          'cancelled'
+                        "
+                      >
+                        <span class="status-dot"></span>
+
+                        {{
+                          getStatusLabel(
+                            donation.payment_status
+                          )
+                        }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="date-value">
+                        {{
+                          donation.donated_at
+                            | date: 'dd MMM yyyy'
+                        }}
+                      </span>
+
+                      <span class="time-value">
+                        {{
+                          donation.donated_at
+                            | date: 'hh:mm a'
+                        }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="transaction-id">
+                        {{
+                          donation.transaction_id ||
+                          donation.payment_reference ||
+                          '—'
+                        }}
+                      </span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </section>
+      } @else {
+        <app-empty-state
+          title="No donations found"
+          message="There are no donations matching your current search or filters."
+        />
+      }
+
+      <section class="back-section">
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="openDashboard()"
+        >
+          ← Back to Dashboard
+        </button>
+      </section>
+    }
+  </main>
+</div>

@@ -1,0 +1,26 @@
+<div
+  class="empty-state"
+  [class.empty-state--compact]="compact"
+>
+  <div class="empty-state__icon" aria-hidden="true">
+    {{ icon }}
+  </div>
+
+  <h3 class="empty-state__title">
+    {{ title }}
+  </h3>
+
+  <p class="empty-state__message">
+    {{ message }}
+  </p>
+
+  @if (actionLabel) {
+    <button
+      type="button"
+      class="empty-state__button"
+      (click)="onActionClick()"
+    >
+      {{ actionLabel }}
+    </button>
+  }
+</div>

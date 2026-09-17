@@ -1,0 +1,543 @@
+<div class="admin-page">
+
+  <!-- ==============================
+       ADMIN HEADER
+       ============================== -->
+
+  <header class="admin-header">
+
+    <div class="header-inner">
+
+      <a
+        class="brand"
+        href="/admin"
+      >
+
+        <span class="brand-mark">
+          D
+        </span>
+
+        <span class="brand-name">
+          Daandata
+        </span>
+
+        <span class="admin-badge">
+          Admin
+        </span>
+
+      </a>
+
+
+      <div class="header-actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="viewPublicDonations()"
+        >
+          Public View
+        </button>
+
+        <button
+          type="button"
+          class="logout-button"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==============================
+       ADMIN NAVIGATION
+       ============================== -->
+
+  <nav class="admin-navigation">
+
+    <a
+      routerLink="/admin"
+      class="admin-nav-link"
+    >
+
+      <span
+        class="nav-icon"
+        aria-hidden="true"
+      >
+        ⌂
+      </span>
+
+      <span>
+        Dashboard
+      </span>
+
+    </a>
+
+
+    <a
+      routerLink="/admin/team"
+      class="admin-nav-link"
+    >
+
+      <span
+        class="nav-icon"
+        aria-hidden="true"
+      >
+        👥
+      </span>
+
+      <span>
+        Team
+      </span>
+
+    </a>
+
+  </nav>
+
+
+  <!-- ==============================
+       MAIN DASHBOARD
+       ============================== -->
+
+  <main class="dashboard-main">
+
+    <section class="welcome-section">
+
+      <div>
+
+        <p class="eyebrow">
+          समिति प्रबंधन
+        </p>
+
+        <h1>
+          दान प्रबंधन
+        </h1>
+
+        <p class="description">
+          श्री विश्वकर्मा मंदिर एवं सेवा समिति के
+          दान रिकॉर्ड को व्यवस्थित और पारदर्शी रखें।
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="primary-button"
+        (click)="addDonation()"
+      >
+        + दान जोड़ें
+      </button>
+
+    </section>
+
+
+    <!-- ==============================
+         LOADING
+         ============================== -->
+
+    @if (loading) {
+
+      <section class="state-card">
+
+        <div class="loader"></div>
+
+        <p>
+          रिकॉर्ड लोड हो रहे हैं...
+        </p>
+
+      </section>
+
+    }
+
+
+    <!-- ==============================
+         ERROR
+         ============================== -->
+
+    @if (!loading && errorMessage) {
+
+      <section class="state-card error-card">
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </section>
+
+    }
+
+
+    @if (!loading && !errorMessage) {
+
+      <!-- ==============================
+           STATISTICS
+           ============================== -->
+
+      <section class="stats-grid">
+
+        <article class="stat-card">
+
+          <span class="stat-label">
+            कुल दान
+          </span>
+
+          <strong class="stat-value">
+            {{ totalDonations }}
+          </strong>
+
+          <span class="stat-description">
+            सफल दान प्रविष्टियाँ
+          </span>
+
+        </article>
+
+
+        <article class="stat-card">
+
+          <span class="stat-label">
+            कुल राशि
+          </span>
+
+          <strong class="stat-value">
+            {{ formatAmount(totalAmount) }}
+          </strong>
+
+          <span class="stat-description">
+            सफल दान से प्राप्त राशि
+          </span>
+
+        </article>
+
+      </section>
+
+
+      <!-- ==============================
+           DONATION RECORDS
+           ============================== -->
+
+      <section class="records-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <p class="eyebrow">
+              दान रिकॉर्ड
+            </p>
+
+            <h2>
+              दान की जानकारी
+            </h2>
+
+            <p class="section-description">
+              समिति द्वारा दर्ज किए गए सफल दानों की जानकारी देखें।
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="primary-button desktop-add-button"
+            (click)="addDonation()"
+          >
+            + दान जोड़ें
+          </button>
+
+        </div>
+
+
+        @if (sortedDonations.length > 0) {
+
+          <div class="table-card">
+
+            <div class="table-wrapper">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+
+                      <button
+                        type="button"
+                        class="sort-button"
+                        [class.active]="
+                          sortColumn === 'donor_name'
+                        "
+                        (click)="sortBy('donor_name')"
+                        [attr.aria-label]="
+                          getSortLabel('donor_name')
+                        "
+                      >
+
+                        <span>
+                          दानदाता
+                        </span>
+
+                        <span
+                          class="sort-icon"
+                          aria-hidden="true"
+                        >
+                          {{ getSortIcon('donor_name') }}
+                        </span>
+
+                      </button>
+
+                    </th>
+
+
+                    <th class="amount-column">
+
+                      <button
+                        type="button"
+                        class="sort-button"
+                        [class.active]="
+                          sortColumn === 'amount'
+                        "
+                        (click)="sortBy('amount')"
+                        [attr.aria-label]="
+                          getSortLabel('amount')
+                        "
+                      >
+
+                        <span>
+                          राशि
+                        </span>
+
+                        <span
+                          class="sort-icon"
+                          aria-hidden="true"
+                        >
+                          {{ getSortIcon('amount') }}
+                        </span>
+
+                      </button>
+
+                    </th>
+
+
+                    <th>
+
+                      <button
+                        type="button"
+                        class="sort-button"
+                        [class.active]="
+                          sortColumn === 'donated_at'
+                        "
+                        (click)="sortBy('donated_at')"
+                        [attr.aria-label]="
+                          getSortLabel('donated_at')
+                        "
+                      >
+
+                        <span>
+                          दान की तारीख
+                        </span>
+
+                        <span
+                          class="sort-icon"
+                          aria-hidden="true"
+                        >
+                          {{ getSortIcon('donated_at') }}
+                        </span>
+
+                      </button>
+
+                    </th>
+
+
+                    <th class="share-column">
+
+                      <span class="share-heading">
+                        साझा करें
+                      </span>
+
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                  @for (
+                    donation of sortedDonations;
+                    track donation.id
+                  ) {
+
+                    <tr>
+
+                      <td data-label="दानदाता">
+
+                        <span class="donor-name">
+                          {{ donation.donor_name }}
+                        </span>
+
+                      </td>
+
+
+                      <td
+                        class="amount-cell"
+                        data-label="राशि"
+                      >
+
+                        {{ formatAmount(donation.amount) }}
+
+                      </td>
+
+
+                      <td data-label="दान की तारीख">
+
+                        {{ formatDate(donation.donated_at) }}
+
+                      </td>
+
+
+                      <td
+                        class="share-cell"
+                        data-label="साझा करें"
+                      >
+
+                        <button
+                          type="button"
+                          class="share-button"
+                          (click)="shareDonation(donation)"
+                          aria-label="दान साझा करें"
+                          title="WhatsApp पर दान की जानकारी साझा करें"
+                        >
+
+                          <img
+                            src="assets/icons/share.png"
+                            alt=""
+                            class="share-icon"
+                          />
+
+                          <span class="share-text">
+                            साझा करें
+                          </span>
+
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <!-- ==============================
+             EMPTY STATE
+             ============================== -->
+
+        @if (sortedDonations.length === 0) {
+
+          <div class="state-card">
+
+            <p>
+              अभी तक कोई सफल दान दर्ज नहीं किया गया है।
+            </p>
+
+            <button
+              type="button"
+              class="primary-button"
+              (click)="addDonation()"
+            >
+              + पहला दान जोड़ें
+            </button>
+
+          </div>
+
+        }
+
+      </section>
+
+    }
+
+  </main>
+
+
+  <!-- ==============================
+       FOOTER
+       ============================== -->
+
+  <footer class="site-footer">
+
+    <div class="footer-inner">
+
+
+      <div class="footer-copy">
+
+        <span>
+          © 2026 Daandata
+        </span>
+
+        <span>
+          श्री विश्वकर्मा मंदिर एवं सेवा समिति
+        </span>
+
+      </div>
+
+
+      <div class="footer-contact">
+
+        <a
+          href="mailto:vishwakarmapoojabhikharirampur@gmail.com"
+          class="footer-email"
+        >
+          vishwakarmapoojabhikharirampur@gmail.com
+        </a>
+
+        <a
+          href="https://www.facebook.com/profile.php?id=61594199260188"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="facebook-link"
+        >
+          Facebook
+        </a>
+
+      </div>
+
+
+      <div class="developer-credit">
+
+        <span>
+          Designed and developed by
+        </span>
+
+        <a
+          href="https://www.surakshawalls.space/software"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <strong>
+            Suraksha Software
+          </strong>
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+</div>

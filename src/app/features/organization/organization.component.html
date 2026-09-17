@@ -1,0 +1,200 @@
+<div class="organization-page">
+  <app-header
+    [userName]="userName"
+    [notificationCount]="0"
+    (dashboardClicked)="goToDashboard()"
+    (notificationsClicked)="goToNotifications()"
+    (profileClicked)="goToProfile()"
+    (logoutClicked)="logout()"
+  ></app-header>
+
+  <main class="page-content">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">WORKSPACE</p>
+
+        <h1>Organization</h1>
+
+        <p class="page-description">
+          Manage your organization and workspace information.
+        </p>
+      </div>
+    </section>
+
+    @if (loading) {
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+
+        <p>Loading organization...</p>
+      </div>
+    } @else if (errorMessage && !organizationId) {
+      <section class="error-card">
+        <div class="error-icon">!</div>
+
+        <h2>Organization unavailable</h2>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+        <button
+          type="button"
+          class="back-button"
+          (click)="goToDashboard()"
+        >
+          Back to Dashboard
+        </button>
+      </section>
+    } @else {
+      <div class="organization-layout">
+        <section class="organization-card">
+          <div class="organization-banner"></div>
+
+          <div class="organization-content">
+            <div class="organization-logo">
+              {{ organizationInitials }}
+            </div>
+
+            <h2>
+              {{ organizationName || 'Organization' }}
+            </h2>
+
+            <p class="organization-slug">
+              {{ organizationSlug }}
+            </p>
+
+            <div class="organization-divider"></div>
+
+            <div class="organization-meta">
+              <div class="meta-item">
+                <span class="meta-label">
+                  Your Role
+                </span>
+
+                <span class="role-badge">
+                  {{ userRole || 'Member' }}
+                </span>
+              </div>
+
+              <div class="meta-item">
+                <span class="meta-label">
+                  Organization ID
+                </span>
+
+                <span class="meta-value organization-id">
+                  {{ organizationId }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>Organization Information</h2>
+
+              <p>
+                Update the basic information for your organization.
+              </p>
+            </div>
+          </div>
+
+          @if (successMessage) {
+            <div class="message success-message">
+              <span class="message-icon">✓</span>
+
+              <span>
+                {{ successMessage }}
+              </span>
+            </div>
+          }
+
+          @if (errorMessage && organizationId) {
+            <div class="message error-message">
+              <span class="message-icon">!</span>
+
+              <span>
+                {{ errorMessage }}
+              </span>
+            </div>
+          }
+
+          <form
+            class="organization-form"
+            (ngSubmit)="saveOrganization()"
+          >
+            <div class="form-group">
+              <label for="organizationName">
+                Organization Name
+              </label>
+
+              <input
+                id="organizationName"
+                type="text"
+                name="organizationName"
+                [(ngModel)]="organizationName"
+                placeholder="Enter organization name"
+                autocomplete="organization"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="organizationSlug">
+                Organization Slug
+              </label>
+
+              <div class="slug-input">
+                <span class="slug-prefix">
+                  /
+                </span>
+
+                <input
+                  id="organizationSlug"
+                  type="text"
+                  name="organizationSlug"
+                  [(ngModel)]="organizationSlug"
+                  placeholder="organization-slug"
+                  autocomplete="off"
+                />
+              </div>
+
+              <span class="field-hint">
+                Used as the unique identifier for your organization.
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label>
+                Your Role
+              </label>
+
+              <div class="readonly-field">
+                {{ userRole || 'Member' }}
+              </div>
+
+              <span class="field-hint">
+                Organization roles and permissions will be managed separately.
+              </span>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="save-button"
+                [disabled]="saving"
+              >
+                @if (saving) {
+                  <span class="button-spinner"></span>
+                  Saving...
+                } @else {
+                  Save Changes
+                }
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    }
+  </main>
+</div>

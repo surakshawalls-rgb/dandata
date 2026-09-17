@@ -1,0 +1,241 @@
+<div class="team-page">
+
+  <!-- ==============================
+       HEADER
+       ============================== -->
+
+  <header class="team-header">
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="goBack()"
+    >
+      ← वापस जाएँ
+    </button>
+
+
+    <div class="team-heading">
+
+      <p class="eyebrow">
+        श्री विश्वकर्मा मंदिर एवं सेवा समिति
+      </p>
+
+      <h1>
+        हमारी टीम
+      </h1>
+
+      <p>
+        एक विचार, एक संकल्प और सामूहिक प्रयास —
+        यही हमारी टीम की पहचान है।
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <!-- ==============================
+       TEAM INTRO
+       ============================== -->
+
+  <main class="team-content">
+
+    <section class="team-intro">
+
+      <div class="team-intro-content">
+
+        <span class="intro-mark">
+          01
+        </span>
+
+        <div>
+
+          <h2>
+            साथ मिलकर बदलाव की शुरुआत
+          </h2>
+
+          <p>
+            श्री विश्वकर्मा मंदिर एवं सेवा समिति के सदस्य
+            मिलकर पूजा, मंदिर निर्माण और समाज सेवा के
+            संकल्प को आगे बढ़ाने के लिए कार्य करते हैं।
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         TEAM GALLERY
+         ============================== -->
+
+    <section
+      class="team-section"
+      aria-label="समिति के सदस्य"
+    >
+
+      <div class="team-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            समिति के सदस्य
+          </p>
+
+          <h2>
+            हमारी टीम
+          </h2>
+
+        </div>
+
+        <p>
+          हर सदस्य इस सामूहिक प्रयास का एक महत्वपूर्ण हिस्सा है।
+        </p>
+
+      </div>
+
+
+      <div
+        class="team-gallery"
+        aria-label="समिति के सदस्य"
+      >
+
+        @for (image of teamImages; track image) {
+
+          <article class="team-card">
+
+            <div class="team-photo-wrapper">
+
+              <img
+                [src]="'assets/team/' + image"
+                alt="श्री विश्वकर्मा मंदिर एवं सेवा समिति के सदस्य"
+                class="team-photo"
+                loading="lazy"
+                decoding="async"
+              />
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         MOTIVATIONAL MESSAGE
+         ============================== -->
+
+    <section class="team-message">
+
+      <p class="eyebrow">
+        हमारा विश्वास
+      </p>
+
+      <h2>
+        एक साथ मिलकर किया गया प्रयास
+        <span>स्थायी बदलाव की शुरुआत है।</span>
+      </h2>
+
+      <p>
+        हमारी कोशिश है कि आज का छोटा-सा योगदान
+        आने वाली पीढ़ियों के लिए एक मजबूत आधार बने।
+      </p>
+
+      <div class="team-values">
+
+        <span>
+          एकता
+        </span>
+
+        <span>
+          पारदर्शिता
+        </span>
+
+        <span>
+          सेवा
+        </span>
+
+        <span>
+          सम्मान
+        </span>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ==============================
+       FOOTER
+       ============================== -->
+
+  <footer class="site-footer">
+
+  <div class="footer-inner">
+
+    <div class="footer-copy">
+
+      <span>
+        © 2026 Daandata
+      </span>
+
+      <span>
+        श्री विश्वकर्मा मंदिर एवं सेवा समिति
+      </span>
+
+    </div>
+
+
+    <div class="footer-contact">
+
+      <a
+        href="mailto:vishwakarmapoojabhikharirampur@gmail.com"
+        class="footer-email"
+      >
+        vishwakarmapoojabhikharirampur@gmail.com
+      </a>
+
+      <a
+        href="https://www.facebook.com/profile.php?id=61594199260188"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="facebook-link"
+      >
+        Facebook
+      </a>
+
+    </div>
+
+
+    <div class="developer-credit">
+
+      <span>
+        Designed and developed by
+      </span>
+
+      <a
+        href="https://www.surakshawalls.space/software"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <strong>
+          Suraksha Software
+        </strong>
+      </a>
+
+    </div>
+
+  </div>
+
+</footer>
+
+</div>

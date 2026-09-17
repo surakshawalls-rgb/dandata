@@ -1,0 +1,106 @@
+<div class="image-upload">
+  <label class="image-upload__label">
+    {{ label }}
+  </label>
+
+  @if (previewUrl) {
+    <div class="image-upload__preview">
+      <img
+        [src]="previewUrl"
+        alt="Selected image preview"
+        class="image-upload__image"
+      />
+
+      @if (!disabled) {
+        <button
+          type="button"
+          class="image-upload__remove"
+          aria-label="Remove image"
+          (click)="removeFile()"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12"></path>
+            <path d="M18 6 6 18"></path>
+          </svg>
+
+          <span>Remove</span>
+        </button>
+      }
+    </div>
+  } @else {
+    <label
+      class="image-upload__dropzone"
+      [class.image-upload__dropzone--dragging]="
+        isDragging
+      "
+      [class.image-upload__dropzone--disabled]="
+        disabled
+      "
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+    >
+      <div
+        class="image-upload__icon"
+        aria-hidden="true"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="2"
+          ></rect>
+          <circle
+            cx="8.5"
+            cy="8.5"
+            r="1.5"
+          ></circle>
+          <path
+            d="m21 15-5-5L5 21"
+          ></path>
+        </svg>
+      </div>
+
+      <span class="image-upload__text">
+        <strong>Choose an image</strong>
+        or drag and drop
+      </span>
+
+      <span class="image-upload__hint">
+        {{ hint }}
+      </span>
+
+      <input
+        type="file"
+        class="image-upload__input"
+        [accept]="accept"
+        [disabled]="disabled"
+        (change)="onFileInput($event)"
+      />
+    </label>
+  }
+
+  @if (errorMessage) {
+    <p
+      class="image-upload__error"
+      role="alert"
+    >
+      {{ errorMessage }}
+    </p>
+  }
+</div>

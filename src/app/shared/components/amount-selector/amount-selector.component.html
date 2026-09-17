@@ -1,0 +1,74 @@
+<div class="amount-selector">
+  <div class="amount-selector__header">
+    <h3 class="amount-selector__title">
+      Select Amount
+    </h3>
+
+    <span class="amount-selector__selected">
+      {{ formattedSelectedAmount }}
+    </span>
+  </div>
+
+  <div class="amount-selector__options">
+    @for (amount of amounts; track amount) {
+      <button
+        type="button"
+        class="amount-selector__option"
+        [class.amount-selector__option--selected]="
+          isSelected(amount)
+        "
+        [disabled]="disabled"
+        (click)="selectAmount(amount)"
+      >
+        {{ currency }} {{ amount | number }}
+      </button>
+    }
+  </div>
+
+  @if (showCustomInput) {
+    <div class="amount-selector__custom">
+      <label
+        class="amount-selector__custom-label"
+        for="custom-amount"
+      >
+        Custom Amount
+      </label>
+
+      <div class="amount-selector__input-wrapper">
+        <span class="amount-selector__currency">
+          {{ currency }}
+        </span>
+
+        <input
+          id="custom-amount"
+          type="number"
+          class="amount-selector__input"
+          [ngModel]="selectedAmount"
+          [min]="minAmount"
+          [max]="maxAmount"
+          [disabled]="disabled"
+          placeholder="Enter amount"
+          inputmode="decimal"
+          (ngModelChange)="onCustomAmountChange($event)"
+        />
+      </div>
+    </div>
+  }
+
+  @if (
+    selectedAmount > 0 &&
+    selectedAmount < minAmount
+  ) {
+    <p class="amount-selector__error">
+      Minimum amount is
+      {{ currency }} {{ minAmount | number }}.
+    </p>
+  }
+
+  @if (selectedAmount > maxAmount) {
+    <p class="amount-selector__error">
+      Maximum amount is
+      {{ currency }} {{ maxAmount | number }}.
+    </p>
+  }
+</div>

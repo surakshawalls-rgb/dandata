@@ -1,0 +1,70 @@
+@if (visible) {
+  <div
+    class="dialog-backdrop"
+    role="presentation"
+    (click)="onBackdropClick($event)"
+    (keydown)="onDialogKeydown($event)"
+  >
+    <div
+      class="dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="'confirm-dialog-title'"
+      [attr.aria-describedby]="'confirm-dialog-message'"
+    >
+      <div
+        class="dialog__icon"
+        [class.dialog__icon--danger]="danger"
+        [class.dialog__icon--normal]="!danger"
+        aria-hidden="true"
+      >
+        {{ icon }}
+      </div>
+
+      <h2
+        id="confirm-dialog-title"
+        class="dialog__title"
+      >
+        {{ title }}
+      </h2>
+
+      <p
+        id="confirm-dialog-message"
+        class="dialog__message"
+      >
+        {{ message }}
+      </p>
+
+      <div class="dialog__actions">
+        <button
+          type="button"
+          class="dialog__button dialog__button--cancel"
+          [disabled]="loading"
+          (click)="onCancel()"
+        >
+          {{ cancelLabel }}
+        </button>
+
+        <button
+          type="button"
+          class="dialog__button"
+          [class.dialog__button--danger]="danger"
+          [class.dialog__button--confirm]="!danger"
+          [disabled]="loading"
+          (click)="onConfirm()"
+        >
+          @if (loading) {
+            <span
+              class="dialog__spinner"
+              aria-hidden="true"
+            ></span>
+          }
+
+          <span>
+            {{ loading ? 'Please wait...' : confirmLabel }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+}

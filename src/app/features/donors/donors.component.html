@@ -1,0 +1,224 @@
+<div class="donors-page">
+  <app-header
+    title="Donors"
+    [userName]="userName"
+    [notificationCount]="0"
+    (notificationClicked)="openNotifications()"
+    (profileClicked)="openProfile()"
+    (logoutClicked)="logout()"
+  />
+
+  <main class="donors-content">
+    @if (loading) {
+      <app-loading-state
+        message="Loading donors..."
+      />
+    }
+
+    @if (!loading && errorMessage) {
+      <app-error-state
+        [message]="errorMessage"
+        (retryClicked)="loadDonors()"
+      />
+    }
+
+    @if (!loading && !errorMessage) {
+      <section class="page-intro">
+        <div>
+          <p class="eyebrow">
+            Donor management
+          </p>
+
+          <h1>
+            Your Donors
+          </h1>
+
+          <p class="intro-text">
+            Manage donor information and
+            relationships in one place.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="createDonor()"
+        >
+          <span
+            class="button-icon"
+            aria-hidden="true"
+          >
+            +
+          </span>
+
+          Add Donor
+        </button>
+      </section>
+
+      <section class="summary-grid">
+        <div class="summary-card">
+          <span class="summary-label">
+            Total Donors
+          </span>
+
+          <strong class="summary-value">
+            {{ donors.length }}
+          </strong>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Active
+          </span>
+
+          <strong class="summary-value">
+            {{ activeDonorCount }}
+          </strong>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Individuals
+          </span>
+
+          <strong class="summary-value">
+            {{ individualDonorCount }}
+          </strong>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-label">
+            Organizations
+          </span>
+
+          <strong class="summary-value">
+            {{ organizationDonorCount }}
+          </strong>
+        </div>
+      </section>
+
+      <section class="filters-section">
+        <div class="search-wrapper">
+          <span
+            class="search-icon"
+            aria-hidden="true"
+          >
+            ⌕
+          </span>
+
+          <input
+            type="search"
+            class="search-input"
+            placeholder="Search donors by name, email, phone, city..."
+            [value]="searchTerm"
+            (input)="onSearchChange($any($event.target).value)"
+          />
+        </div>
+
+        <div class="filter-wrapper">
+          <label
+            class="filter-label"
+            for="donor-status"
+          >
+            Status
+          </label>
+
+          <select
+            id="donor-status"
+            class="filter-select"
+            [value]="statusFilter"
+            (change)="onStatusChange($event)"
+          >
+            <option value="all">
+              All Donors
+            </option>
+
+            <option value="active">
+              Active
+            </option>
+
+            <option value="inactive">
+              Inactive
+            </option>
+          </select>
+        </div>
+
+        <div class="filter-wrapper">
+          <label
+            class="filter-label"
+            for="donor-type"
+          >
+            Type
+          </label>
+
+          <select
+            id="donor-type"
+            class="filter-select"
+            [value]="donorTypeFilter"
+            (change)="onDonorTypeChange($event)"
+          >
+            <option value="all">
+              All Types
+            </option>
+
+            <option value="individual">
+              Individual
+            </option>
+
+            <option value="organization">
+              Organization
+            </option>
+          </select>
+        </div>
+      </section>
+
+      @if (filteredDonors.length > 0) {
+        <section class="donors-section">
+          <div class="section-header">
+            <div>
+              <h2>
+                All Donors
+              </h2>
+
+              <p>
+                Showing
+                {{ filteredDonors.length }}
+                donor{{ filteredDonors.length === 1 ? '' : 's' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="donors-grid">
+            @for (
+              donor of filteredDonors;
+              track donor.id
+            ) {
+              <app-donor-card
+                [donor]="donor"
+                (clicked)="openDonor($event)"
+                (editClicked)="editDonor($event)"
+              />
+            }
+          </div>
+        </section>
+      } @else {
+        <app-empty-state
+          title="No donors found"
+          message="There are no donors matching your current search or filters."
+          actionLabel="Add Donor"
+          (actionClicked)="createDonor()"
+        />
+      }
+
+      <section class="back-section">
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="openDashboard()"
+        >
+          ← Back to Dashboard
+        </button>
+      </section>
+    }
+  </main>
+</div>

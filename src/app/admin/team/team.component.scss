@@ -1,0 +1,869 @@
+.team-page {
+  min-height: 100vh;
+  padding: 24px;
+  background: #ffffff;
+}
+
+/* ==============================
+   HEADER
+   ============================== */
+
+.team-header {
+  position: relative;
+
+  padding: 24px 0 40px;
+  margin-bottom: 44px;
+
+  text-align: center;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.team-heading {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 9px;
+
+  color: #2563eb;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.team-heading h1 {
+  margin: 0 0 12px;
+
+  color: #111827;
+
+  font-size: clamp(34px, 5vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -1.2px;
+}
+
+.team-heading p:last-child {
+  max-width: 620px;
+  margin: 0 auto;
+
+  color: #64748b;
+
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+
+/* ==============================
+   BACK BUTTON
+   ============================== */
+
+.back-button {
+  position: absolute;
+  top: 24px;
+  left: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+  padding: 0 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #374151;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.back-button:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.back-button:active {
+  transform: translateY(1px);
+}
+
+
+/* ==============================
+   MAIN CONTENT
+   ============================== */
+
+.team-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+
+/* ==============================
+   TEAM INTRO
+   ============================== */
+
+.team-intro {
+  max-width: 1000px;
+
+  margin: 0 auto 64px;
+  padding: 34px 36px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+
+  background: #f8fbff;
+}
+
+.team-intro-content {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 24px;
+}
+
+.intro-mark {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 12px;
+
+  background: #dbeafe;
+  color: #2563eb;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.team-intro h2 {
+  margin: 0 0 10px;
+
+  color: #172033;
+
+  font-size: 26px;
+  line-height: 1.3;
+}
+
+.team-intro p {
+  max-width: 760px;
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+
+/* ==============================
+   TEAM SECTION
+   ============================== */
+
+.team-section {
+  width: 100%;
+}
+
+.team-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 30px;
+}
+
+.team-section-heading h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 34px;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+}
+
+.team-section-heading > p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  text-align: right;
+}
+
+
+/* ==============================
+   TEAM GRID
+   ============================== */
+
+.team-gallery {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+
+/* ==============================
+   TEAM CARD
+   ============================== */
+
+.team-card {
+  width: 100%;
+
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 8px rgba(15, 23, 42, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 10px 26px rgba(15, 23, 42, 0.09);
+}
+
+
+/* ==============================
+   PHOTO
+   ============================== */
+
+.team-photo-wrapper {
+  width: 100%;
+  height: 320px;
+
+  overflow: hidden;
+
+  background: #f3f4f6;
+}
+
+.team-photo {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-photo {
+  transform: scale(1.03);
+}
+
+
+/* ==============================
+   MOTIVATIONAL MESSAGE
+   ============================== */
+
+.team-message {
+  max-width: 900px;
+
+  margin: 90px auto 20px;
+  padding: 56px 32px;
+
+  text-align: center;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+.team-message h2 {
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  color: #172033;
+
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.25;
+
+  letter-spacing: -1px;
+}
+
+.team-message h2 span {
+  display: block;
+
+  color: #2563eb;
+}
+
+.team-message > p:not(.eyebrow) {
+  max-width: 620px;
+
+  margin: 18px auto 0;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* ==============================
+   VALUES
+   ============================== */
+
+.team-values {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-top: 28px;
+}
+
+.team-values span {
+  padding: 8px 14px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+
+  background: #f8fbff;
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ==============================
+   EMPTY STATE
+   ============================== */
+
+.team-empty-state {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px;
+
+  text-align: center;
+
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+}
+
+.team-icon {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 16px;
+
+  border-radius: 50%;
+
+  background: #f3f4f6;
+}
+
+.team-icon span {
+  font-size: 30px;
+}
+
+.team-empty-state h2 {
+  margin: 0 0 8px;
+}
+
+.team-empty-state p {
+  margin: 0;
+
+  color: #6b7280;
+}
+
+
+/* ==============================
+   FOOTER
+   ============================== */
+
+.site-footer {
+  margin-top: 70px;
+  padding: 30px 24px;
+
+  border-top: 1px solid #e5e7eb;
+
+  background: #f9fafb;
+}
+
+.footer-inner {
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 28px;
+}
+
+
+/* ==============================
+   FOOTER COPY
+   ============================== */
+
+.footer-copy {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.footer-copy span + span::before {
+  content: "•";
+
+  margin-right: 8px;
+
+  color: #9ca3af;
+}
+
+
+/* ==============================
+   CONTACT
+   ============================== */
+
+.footer-contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  font-size: 13px;
+}
+
+.footer-email {
+  color: #64748b;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.footer-email:hover {
+  color: #2563eb;
+}
+
+
+/* ==============================
+   FACEBOOK
+   ============================== */
+
+.facebook-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+  padding: 0 13px;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.facebook-link:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.facebook-link:active {
+  transform: translateY(1px);
+}
+
+
+/* ==============================
+   DEVELOPER CREDIT
+   ============================== */
+
+.developer-credit {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.developer-credit a {
+  color: #475569;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.developer-credit a:hover {
+  color: #111827;
+  text-decoration: underline;
+}
+
+
+/* ==============================
+   TABLET / MOBILE
+   ============================== */
+
+@media (max-width: 900px) {
+
+  .footer-inner {
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 16px;
+  }
+
+  .footer-copy,
+  .footer-contact,
+  .developer-credit {
+    justify-content: center;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .site-footer {
+    margin-top: 50px;
+    padding: 26px 16px;
+  }
+
+  .footer-copy {
+    flex-direction: column;
+    gap: 4px;
+
+    font-size: 12px;
+  }
+
+  .footer-copy span + span::before {
+    display: none;
+  }
+
+  .footer-contact {
+    flex-direction: column;
+    gap: 10px;
+
+    max-width: 100%;
+  }
+
+  .footer-email {
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
+
+    font-size: 12px;
+  }
+
+  .facebook-link {
+    min-height: 36px;
+    padding: 0 16px;
+  }
+
+  .developer-credit {
+    flex-direction: column;
+    gap: 4px;
+
+    font-size: 11px;
+  }
+
+}
+
+
+/* ==============================
+   TABLET
+   ============================== */
+
+@media (max-width: 1100px) {
+
+  .team-gallery {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .team-photo-wrapper {
+    height: 300px;
+  }
+
+}
+
+
+/* ==============================
+   SMALL TABLET
+   ============================== */
+
+@media (max-width: 768px) {
+
+  .team-page {
+    padding: 16px;
+  }
+
+  .team-header {
+    padding: 70px 0 32px;
+    margin-bottom: 32px;
+  }
+
+  .back-button {
+    top: 16px;
+    left: 0;
+  }
+
+  .team-intro {
+    margin-bottom: 48px;
+    padding: 26px 24px;
+  }
+
+  .team-intro-content {
+    gap: 18px;
+  }
+
+  .team-intro h2 {
+    font-size: 23px;
+  }
+
+  .team-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .team-section-heading h2 {
+    font-size: 30px;
+  }
+
+  .team-section-heading > p {
+    text-align: left;
+  }
+
+  .team-gallery {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+  }
+
+  .team-photo-wrapper {
+    height: 280px;
+  }
+
+  .team-message {
+    margin-top: 64px;
+    padding: 44px 20px;
+  }
+
+  .site-footer {
+    margin-top: 50px;
+    padding: 24px 16px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 14px;
+  }
+
+  .footer-copy,
+  .developer-credit {
+    justify-content: center;
+
+    font-size: 13px;
+  }
+
+}
+
+
+/* ==============================
+   MOBILE
+   ============================== */
+
+@media (max-width: 480px) {
+
+  .team-page {
+    padding: 12px;
+  }
+
+  .team-header {
+    padding: 64px 8px 28px;
+    margin-bottom: 28px;
+  }
+
+  .back-button {
+    top: 12px;
+    left: 0;
+
+    min-height: 38px;
+    padding: 0 12px;
+
+    font-size: 13px;
+  }
+
+  .team-heading h1 {
+    font-size: 32px;
+  }
+
+  .team-heading p:last-child {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .team-intro {
+    padding: 22px 18px;
+    border-radius: 12px;
+  }
+
+  .team-intro-content {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .intro-mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .team-intro h2 {
+    font-size: 22px;
+  }
+
+  .team-intro p {
+    font-size: 14px;
+  }
+
+  .team-section-heading h2 {
+    font-size: 28px;
+  }
+
+  /*
+    One image per row on mobile.
+  */
+
+  .team-gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /*
+    Same portrait ratio for every
+    mobile photo.
+  */
+
+  .team-photo-wrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .team-photo {
+    object-fit: cover;
+  }
+
+  .team-message {
+    margin-top: 52px;
+    padding: 36px 12px;
+  }
+
+  .team-message h2 {
+    font-size: 28px;
+  }
+
+  .team-message > p:not(.eyebrow) {
+    font-size: 14px;
+  }
+
+  .team-values {
+    gap: 8px;
+  }
+
+  .team-values span {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  .footer-copy {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-copy span + span::before {
+    display: none;
+  }
+
+  .developer-credit {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+}

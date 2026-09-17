@@ -1,0 +1,45 @@
+<div class="filter-bar">
+  <div class="filter-bar__label">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 6h16"></path>
+      <path d="M7 12h10"></path>
+      <path d="M10 18h4"></path>
+    </svg>
+
+    <span>{{ label }}</span>
+  </div>
+
+  <select
+    class="filter-bar__select"
+    [value]="selectedValue"
+    [disabled]="disabled"
+    (change)="onFilterChange($any($event.target).value)"
+  >
+    <option value="">All</option>
+
+    @for (option of options; track option.value) {
+      <option [value]="option.value">
+        {{ option.label }}
+      </option>
+    }
+  </select>
+
+  @if (showReset && selectedValue) {
+    <button
+      type="button"
+      class="filter-bar__reset"
+      [disabled]="disabled"
+      (click)="onReset()"
+    >
+      Reset
+    </button>
+  }
+</div>

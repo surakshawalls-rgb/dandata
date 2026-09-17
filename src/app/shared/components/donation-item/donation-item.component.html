@@ -1,0 +1,101 @@
+<article
+  class="donation-item"
+  role="button"
+  tabindex="0"
+  (click)="onItemClick()"
+  (keydown.enter)="onItemClick()"
+>
+  <div class="donation-main">
+    <div class="avatar">
+      {{ initials }}
+    </div>
+
+    <div class="donor-info">
+      <h3>
+        {{ donorName }}
+      </h3>
+
+      @if (
+        donation.donor_email_snapshot &&
+        !donation.is_anonymous
+      ) {
+        <p>
+          {{ donation.donor_email_snapshot }}
+        </p>
+      }
+
+      @if (
+        showCampaign &&
+        donation.campaign_id
+      ) {
+        <span class="campaign">
+          Campaign donation
+        </span>
+      }
+    </div>
+  </div>
+
+  <div class="donation-details">
+    <div class="amount">
+      {{ formattedAmount }}
+    </div>
+
+    <span
+      class="status"
+      [class.pending]="
+        donation.payment_status === 'pending'
+      "
+      [class.successful]="
+        donation.payment_status === 'successful'
+      "
+      [class.failed]="
+        donation.payment_status === 'failed'
+      "
+      [class.refunded]="
+        donation.payment_status === 'refunded'
+      "
+      [class.cancelled]="
+        donation.payment_status === 'cancelled'
+      "
+    >
+      {{ statusLabel }}
+    </span>
+
+    <time
+      class="date"
+      [attr.datetime]="donation.donated_at"
+    >
+      {{ donation.donated_at | date:'mediumDate' }}
+    </time>
+  </div>
+
+  @if (showActions) {
+    <div class="actions">
+      @if (
+        donation.payment_status ===
+        'successful'
+      ) {
+        <button
+          type="button"
+          class="action-button"
+          (click)="onReceiptClick($event)"
+        >
+          Receipt
+        </button>
+      }
+
+      @if (
+        donation.payment_status ===
+        'successful'
+      ) {
+        <button
+          type="button"
+          class="action-button danger"
+          (click)="onRefundClick($event)"
+        >
+          Refund
+        </button>
+      }
+    </div>
+  }
+</article>

@@ -1,0 +1,324 @@
+<div class="campaign-details-page">
+  <app-header
+    title="Campaign Details"
+    [userName]="userName"
+    [notificationCount]="0"
+    (notificationClicked)="openNotifications()"
+    (profileClicked)="openProfile()"
+    (logoutClicked)="logout()"
+  />
+
+  <main class="campaign-details-content">
+    @if (loading) {
+      <div class="state-card">
+        <div class="spinner"></div>
+        <p>Loading campaign...</p>
+      </div>
+    }
+
+    @if (!loading && errorMessage) {
+      <div class="state-card error-state">
+        <div class="error-icon">!</div>
+
+        <h2>Unable to load campaign</h2>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+        <div class="state-actions">
+          <button
+            type="button"
+            class="secondary-button"
+            (click)="goBack()"
+          >
+            Back to Campaigns
+          </button>
+
+          <button
+            type="button"
+            class="primary-button"
+            (click)="loadCampaign()"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (!loading && !errorMessage && campaign) {
+      <section class="page-actions">
+        <button
+          type="button"
+          class="back-button"
+          (click)="goBack()"
+        >
+          ← Back to Campaigns
+        </button>
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="editCampaign()"
+        >
+          Edit Campaign
+        </button>
+      </section>
+
+      <section class="campaign-hero">
+        <div class="campaign-hero-image">
+          @if (campaign.image_url) {
+            <img
+              [src]="campaign.image_url"
+              [alt]="campaign.title"
+            />
+          } @else {
+            <div class="image-placeholder">
+              <span aria-hidden="true">♥</span>
+              <span>Campaign</span>
+            </div>
+          }
+        </div>
+
+        <div class="campaign-hero-content">
+          <div class="title-row">
+            <div>
+              <span
+                class="status-badge"
+                [class.status-active]="campaign.status === 'active'"
+                [class.status-draft]="campaign.status === 'draft'"
+                [class.status-paused]="campaign.status === 'paused'"
+                [class.status-completed]="campaign.status === 'completed'"
+                [class.status-cancelled]="campaign.status === 'cancelled'"
+              >
+                {{ statusLabel }}
+              </span>
+
+              @if (campaign.is_featured) {
+                <span class="featured-badge">
+                  Featured
+                </span>
+              }
+            </div>
+          </div>
+
+          <h1>
+            {{ campaign.title }}
+          </h1>
+
+          @if (campaign.short_description) {
+            <p class="short-description">
+              {{ campaign.short_description }}
+            </p>
+          }
+
+          @if (campaign.description) {
+            <p class="description">
+              {{ campaign.description }}
+            </p>
+          }
+
+          <div class="campaign-meta">
+            <div class="meta-item">
+              <span class="meta-label">
+                Visibility
+              </span>
+
+              <strong>
+                {{
+                  campaign.is_public
+                    ? 'Public'
+                    : 'Private'
+                }}
+              </strong>
+            </div>
+
+            <div class="meta-item">
+              <span class="meta-label">
+                Start Date
+              </span>
+
+              <strong>
+                {{
+                  campaign.start_date
+                    ? (campaign.start_date | date: 'dd MMM yyyy')
+                    : 'Not set'
+                }}
+              </strong>
+            </div>
+
+            <div class="meta-item">
+              <span class="meta-label">
+                End Date
+              </span>
+
+              <strong>
+                {{
+                  campaign.end_date
+                    ? (campaign.end_date | date: 'dd MMM yyyy')
+                    : 'Not set'
+                }}
+              </strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="progress-card">
+        <div class="progress-header">
+          <div>
+            <span class="section-label">
+              Fundraising Progress
+            </span>
+
+            <div class="raised-amount">
+              {{ formattedRaised }}
+            </div>
+
+            <div class="goal-text">
+              raised of
+              {{ formattedGoal }}
+              goal
+            </div>
+          </div>
+
+          <div class="progress-percentage">
+            {{ progressPercentage }}%
+          </div>
+        </div>
+
+        <div class="progress-track">
+          <div
+            class="progress-bar"
+            [style.width.%]="progressPercentage"
+          ></div>
+        </div>
+
+        <div class="progress-footer">
+          <span>
+            {{ formattedRaised }} raised
+          </span>
+
+          @if (remainingAmount > 0) {
+            <span>
+              {{ formattedRemaining }} remaining
+            </span>
+          } @else {
+            <span>
+              Goal reached
+            </span>
+          }
+        </div>
+      </section>
+
+      <section class="information-grid">
+        <div class="information-card">
+          <span class="information-icon">₹</span>
+
+          <div>
+            <span class="information-label">
+              Campaign Goal
+            </span>
+
+            <strong class="information-value">
+              {{ formattedGoal }}
+            </strong>
+          </div>
+        </div>
+
+        <div class="information-card">
+          <span class="information-icon">↗</span>
+
+          <div>
+            <span class="information-label">
+              Amount Raised
+            </span>
+
+            <strong class="information-value">
+              {{ formattedRaised }}
+            </strong>
+          </div>
+        </div>
+
+        <div class="information-card">
+          <span class="information-icon">◷</span>
+
+          <div>
+            <span class="information-label">
+              Created
+            </span>
+
+            <strong class="information-value">
+              {{ campaign.created_at | date: 'dd MMM yyyy' }}
+            </strong>
+          </div>
+        </div>
+
+        <div class="information-card">
+          <span class="information-icon">#</span>
+
+          <div>
+            <span class="information-label">
+              Currency
+            </span>
+
+            <strong class="information-value">
+              {{ campaign.currency }}
+            </strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="campaign-summary">
+        <div class="summary-header">
+          <div>
+            <span class="section-label">
+              Campaign Summary
+            </span>
+
+            <h2>
+              {{ campaign.title }}
+            </h2>
+          </div>
+
+          @if (campaign.slug) {
+            <span class="campaign-slug">
+              /{{ campaign.slug }}
+            </span>
+          }
+        </div>
+
+        <div class="summary-content">
+          @if (campaign.description) {
+            <p>
+              {{ campaign.description }}
+            </p>
+          } @else {
+            <p class="muted-text">
+              No detailed description has been added
+              to this campaign yet.
+            </p>
+          }
+        </div>
+      </section>
+
+      <section class="bottom-actions">
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="goBack()"
+        >
+          ← Back to Campaigns
+        </button>
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="editCampaign()"
+        >
+          Edit Campaign
+        </button>
+      </section>
+    }
+  </main>
+</div>

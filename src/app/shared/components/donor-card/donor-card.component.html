@@ -1,0 +1,101 @@
+<article
+  class="donor-card"
+  role="button"
+  tabindex="0"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+>
+  <div class="donor-main">
+    <div class="avatar">
+      {{ initials }}
+    </div>
+
+    <div class="donor-info">
+      <h3>
+        {{ fullName }}
+      </h3>
+
+      @if (donor.email) {
+        <p class="email">
+          {{ donor.email }}
+        </p>
+      }
+
+      @if (donor.phone) {
+        <p class="phone">
+          {{ donor.phone }}
+        </p>
+      }
+    </div>
+  </div>
+
+  <div class="donor-details">
+    <div class="detail">
+      <span class="label">
+        Total Donated
+      </span>
+
+      <span class="amount">
+        {{ formattedAmount }}
+      </span>
+    </div>
+
+    <div class="detail">
+      <span class="label">
+        Donations
+      </span>
+
+      <span class="value">
+        {{ donor.donation_count }}
+      </span>
+    </div>
+
+    <div class="detail">
+      <span class="label">
+        Type
+      </span>
+
+      <span class="badge">
+        {{ donor.donor_type }}
+      </span>
+    </div>
+  </div>
+
+  <div class="donor-footer">
+    <span
+      class="status"
+      [class.active]="donor.is_active"
+      [class.inactive]="!donor.is_active"
+    >
+      <span class="status-dot"></span>
+
+      {{
+        donor.is_active
+          ? 'Active'
+          : 'Inactive'
+      }}
+    </span>
+
+    @if (showActions) {
+      <div class="actions">
+        <button
+          type="button"
+          class="action-button"
+          aria-label="Edit donor"
+          (click)="onEditClick($event)"
+        >
+          Edit
+        </button>
+
+        <button
+          type="button"
+          class="action-button danger"
+          aria-label="Delete donor"
+          (click)="onDeleteClick($event)"
+        >
+          Delete
+        </button>
+      </div>
+    }
+  </div>
+</article>
