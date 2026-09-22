@@ -1,53 +1,24 @@
 <div class="donations-page">
 
-  <!-- ==============================
-       HEADER
-       ============================== -->
-
   <header class="site-header">
-
     <div class="header-inner">
-
-      <a
-        class="brand"
-        href="/home"
-      >
-
-        <span class="brand-mark">
-          D
-        </span>
-
-        <span class="brand-name">
-          Daandata
-        </span>
-
+      <a class="brand" href="/home">
+        <span class="brand-mark">D</span>
+        <span class="brand-name">Daandata</span>
       </a>
 
-
-      <a
-        class="home-link"
-        href="/home"
-      >
+      <a class="home-link" href="/home">
         ← होम
       </a>
-
     </div>
-
   </header>
-
 
   <main>
 
-    <!-- ==============================
-         PAGE HERO
-         ============================== -->
-
     <section class="page-hero">
-
       <div class="hero-inner">
-
         <p class="eyebrow">
-          श्री विश्वकर्मा मंदिर एवं सेवा समिति
+          श्री विश्वकर्मा मंदिर एवं सेवा समिति · 2026
         </p>
 
         <h1>
@@ -56,371 +27,296 @@
         </h1>
 
         <p class="hero-description">
-          समिति द्वारा प्राप्त सफल दानों का रिकॉर्ड
-          सभी के लिए स्पष्ट और पारदर्शी रूप से उपलब्ध है।
+          विश्वकर्मा पूजा 2026 के लिए प्राप्त आर्थिक सहयोग और आयोजन
+          व्यय का सार्वजनिक एवं पारदर्शी विवरण।
         </p>
-
       </div>
-
     </section>
-
-
-    <!-- ==============================
-         SUMMARY
-         ============================== -->
 
     <section class="summary-section">
-
-      <div class="summary-grid">
+      <div class="summary-grid summary-grid-four">
 
         <article class="summary-card">
-
-          <span class="summary-label">
-            कुल दान
-          </span>
-
+          <span class="summary-label">कुल प्राप्ति</span>
           <strong class="summary-value">
-            {{ totalDonations }}
+            {{ formatAmount(reportedTotalReceived) }}
           </strong>
-
           <span class="summary-description">
-            सफल दान प्रविष्टियाँ
+            बैंक + नकद · Final Report
           </span>
-
         </article>
 
+        <article class="summary-card">
+          <span class="summary-label">कुल व्यय</span>
+          <strong class="summary-value">
+            {{ formatAmount(reportedTotalExpense) }}
+          </strong>
+          <span class="summary-description">
+            पूजा आयोजन का Final Expense
+          </span>
+        </article>
+
+        <article class="summary-card balance-card">
+          <span class="summary-label">कुल बचत</span>
+          <strong class="summary-value">
+            {{ formatAmount(reportedBalance) }}
+          </strong>
+          <span class="summary-description">
+            प्राप्ति − व्यय
+          </span>
+        </article>
 
         <article class="summary-card">
-
-          <span class="summary-label">
-            कुल प्राप्त राशि
-          </span>
-
+          <span class="summary-label">कुल दान प्रविष्टियाँ</span>
           <strong class="summary-value">
-            {{ formatAmount(totalAmount) }}
+            {{ donations.length }}
           </strong>
-
           <span class="summary-description">
-            सफल दानों से प्राप्त राशि
+            आर्थिक सहयोग की consolidated entries
           </span>
-
         </article>
 
       </div>
-
     </section>
 
+    <section class="summary-section money-breakdown-section">
+      <div class="money-breakdown">
+        <div>
+          <span>🏦 बैंक से प्राप्ति</span>
+          <strong>{{ formatAmount(reportedBankReceived) }}</strong>
+        </div>
 
-    <!-- ==============================
-         RECORDS
-         ============================== -->
+        <div>
+          <span>💵 नकद प्राप्ति</span>
+          <strong>{{ formatAmount(reportedCashReceived) }}</strong>
+        </div>
+      </div>
+    </section>
 
     <section class="records-section">
 
       <div class="section-heading">
-
         <div>
-
-          <p class="eyebrow">
-            दान रिकॉर्ड
-          </p>
-
-          <h2>
-            प्राप्त दान की जानकारी
-          </h2>
-
+          <p class="eyebrow">आर्थिक सहयोग</p>
+          <h2>प्राप्त दान / सहयोग का विवरण</h2>
           <p class="section-description">
-            समिति को प्राप्त सफल दानों का विवरण नीचे दिया गया है।
-            रिकॉर्ड को नाम, राशि या तारीख के अनुसार देखा जा सकता है।
+            नीचे समिति के consolidated आर्थिक सहयोग की सभी 42 प्रविष्टियाँ
+            दी गई हैं। एक ही व्यक्ति की बैंक एवं नकद entries को जहाँ नाम
+            स्पष्ट रूप से समान था, एक साथ रखा गया है।
           </p>
-
         </div>
-
       </div>
 
+      <div class="table-card">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <button
+                    type="button"
+                    class="sort-button"
+                    [class.active]="sortColumn === 'donor_name'"
+                    (click)="sortBy('donor_name')"
+                  >
+                    <span>दानदाता / स्रोत</span>
+                    <span class="sort-icon">{{ getSortIcon('donor_name') }}</span>
+                  </button>
+                </th>
 
-      <!-- LOADING -->
+                <th class="amount-column">
+                  <button
+                    type="button"
+                    class="sort-button"
+                    [class.active]="sortColumn === 'amount'"
+                    (click)="sortBy('amount')"
+                  >
+                    <span>राशि</span>
+                    <span class="sort-icon">{{ getSortIcon('amount') }}</span>
+                  </button>
+                </th>
+              </tr>
+            </thead>
 
-      @if (loading) {
-
-        <div class="state-card">
-
-          <div class="loader"></div>
-
-          <p>
-            दान रिकॉर्ड लोड हो रहे हैं...
-          </p>
-
-        </div>
-
-      }
-
-
-      <!-- ERROR -->
-
-      @if (!loading && errorMessage) {
-
-        <div class="state-card error-card">
-
-          <p>
-            {{ errorMessage }}
-          </p>
-
-        </div>
-
-      }
-
-
-      <!-- RECORDS -->
-
-      @if (
-        !loading &&
-        !errorMessage &&
-        sortedDonations.length > 0
-      ) {
-
-        <div class="table-card">
-
-          <div class="table-wrapper">
-
-            <table>
-
-              <thead>
-
+            <tbody>
+              @for (donation of sortedDonations; track donation.id) {
                 <tr>
-
-                  <th>
-
-                    <button
-                      type="button"
-                      class="sort-button"
-                      [class.active]="
-                        sortColumn === 'donor_name'
-                      "
-                      (click)="sortBy('donor_name')"
-                      [attr.aria-label]="
-                        getSortLabel('donor_name')
-                      "
-                    >
-
-                      <span>
-                        दानदाता
-                      </span>
-
-                      <span
-                        class="sort-icon"
-                        aria-hidden="true"
-                      >
-                        {{ getSortIcon('donor_name') }}
-                      </span>
-
-                    </button>
-
-                  </th>
-
-
-                  <th class="amount-column">
-
-                    <button
-                      type="button"
-                      class="sort-button"
-                      [class.active]="
-                        sortColumn === 'amount'
-                      "
-                      (click)="sortBy('amount')"
-                      [attr.aria-label]="
-                        getSortLabel('amount')
-                      "
-                    >
-
-                      <span>
-                        राशि
-                      </span>
-
-                      <span
-                        class="sort-icon"
-                        aria-hidden="true"
-                      >
-                        {{ getSortIcon('amount') }}
-                      </span>
-
-                    </button>
-
-                  </th>
-
-
-                  <th>
-
-                    <button
-                      type="button"
-                      class="sort-button"
-                      [class.active]="
-                        sortColumn === 'donated_at'
-                      "
-                      (click)="sortBy('donated_at')"
-                      [attr.aria-label]="
-                        getSortLabel('donated_at')
-                      "
-                    >
-
-                      <span>
-                        दान की तारीख
-                      </span>
-
-                      <span
-                        class="sort-icon"
-                        aria-hidden="true"
-                      >
-                        {{ getSortIcon('donated_at') }}
-                      </span>
-
-                    </button>
-
-                  </th>
-
-                </tr>
-
-              </thead>
-
-
-              <tbody>
-
-                @for (
-                  donation of sortedDonations;
-                  track donation.id
-                ) {
-
-                  <tr>
-
-                    <td data-label="दानदाता">
-
+                  <td data-label="दानदाता / स्रोत">
+                    <div class="donor-cell">
                       <span class="donor-name">
                         {{ donation.donor_name }}
                       </span>
 
-                    </td>
+                      @if (donation.note) {
+                        <span class="donor-note">
+                          {{ donation.note }}
+                        </span>
+                      }
+                    </div>
+                  </td>
 
+                  <td
+                    class="amount-cell"
+                    data-label="Amount"
+                  >
+                    {{ formatAmount(donation.amount) }}
+                  </td>
+                </tr>
+              }
+            </tbody>
 
-                    <td
-                      class="amount-cell"
-                      data-label="राशि"
-                    >
-
-                      {{ formatAmount(donation.amount) }}
-
-                    </td>
-
-
-                    <td data-label="दान की तारीख">
-
-                      {{ formatDate(donation.donated_at) }}
-
-                    </td>
-
-                  </tr>
-
-                }
-
-              </tbody>
-
-            </table>
-
-          </div>
-
+            <tfoot>
+              <tr>
+                <td>
+                  <strong>Itemized entries total</strong>
+                </td>
+                <td class="amount-cell">
+                  <strong>{{ formatAmount(itemizedDonationTotal) }}</strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
+      </div>
 
-      }
-
-
-      <!-- EMPTY -->
-
-      @if (
-        !loading &&
-        !errorMessage &&
-        sortedDonations.length === 0
-      ) {
-
-        <div class="state-card">
-
-          <p>
-            अभी कोई दान रिकॉर्ड उपलब्ध नहीं है।
-          </p>
-
-        </div>
-
+      @if (reconciliationDifference !== 0) {
+        
       }
 
     </section>
 
+    <section class="records-section in-kind-section">
 
-    <!-- ==============================
-         TRANSPARENCY MESSAGE
-         ============================== -->
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">वस्तु के रूप में प्राप्त सहयोग</p>
+          <h2>वस्तु एवं सामग्री के रूप में प्राप्त सहयोग</h2>
+          <p class="section-description">
+            ये सहयोग वस्तु या सामग्री के रूप में प्राप्त हुए हैं और ₹98,028 की आर्थिक प्राप्ति में शामिल नहीं हैं।
+          </p>
+        </div>
+      </div>
+
+      <div class="in-kind-grid">
+        @for (contribution of inKindContributions; track contribution.id) {
+          <article class="in-kind-card">
+            <div class="in-kind-number">{{ contribution.id }}</div>
+            <div class="in-kind-body">
+              <h3>{{ contribution.contributor }}</h3>
+              <ul>
+                @for (item of contribution.items; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          </article>
+        }
+      </div>
+
+    </section>
+
+    <section class="records-section expense-section">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">आयोजन का व्यय</p>
+          <h2>विस्तृत व्यय विवरण</h2>
+          <p class="section-description">
+            नीचे 2026 के उपलब्ध व्यय रिकॉर्ड की सभी 34 प्रविष्टियाँ दी गई हैं। इन सभी प्रविष्टियों का कुल योग ₹97,073 है।
+          </p>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-wrapper">
+          <table class="expense-table">
+            <thead>
+              <tr>
+                <th>व्यय का विवरण</th>
+                <th class="amount-column">राशि</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (expense of expenses; track expense.id) {
+                <tr>
+                  <td data-label="व्यय का विवरण">
+                    <div class="donor-cell">
+                      <span class="donor-name">
+                        {{ expense.description }}
+                      </span>
+                      @if (expense.note) {
+                        <span class="donor-note">
+                          {{ expense.note }}
+                        </span>
+                      }
+                    </div>
+                  </td>
+
+                  <td
+                    class="amount-cell expense-amount"
+                    data-label="Amount"
+                  >
+                    {{ formatAmount(expense.amount) }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <td>
+                  <strong>कुल व्यय</strong>
+                </td>
+                <td class="amount-cell">
+                  <strong>{{ formatAmount(reportedTotalExpense) }}</strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="expense-verification-note">
+        विस्तृत व्यय का कुल योग: <strong>{{ formatAmount(itemizedExpenseTotal) }}</strong> — यह रिपोर्ट में दिए गए अंतिम व्यय से मेल खाता है।
+      </div>
+
+    </section>
 
     <section class="transparency-section">
-
       <div class="transparency-content">
 
-        <p class="eyebrow">
-          हमारा विश्वास
-        </p>
+        <p class="eyebrow">हमारा संकल्प</p>
 
         <h2>
-          हर योगदान महत्वपूर्ण है।
+          पूजा से सेवा तक, एक सतत संकल्प।
         </h2>
 
         <p>
-          हमारा प्रयास है कि प्रत्येक दान का रिकॉर्ड
-          स्पष्ट रहे और समिति के कार्यों में विश्वास बना रहे।
+          हर वर्ष श्री विश्वकर्मा पूजा के साथ मंदिर निर्माण और समाज सेवा
+          की दिशा में एक कदम आगे बढ़ाने का हमारा संकल्प है।
         </p>
 
         <div class="transparency-points">
-
-          <span>
-            ✓ हर दान का रिकॉर्ड
-          </span>
-
-          <span>
-            ✓ पारदर्शी व्यवस्था
-          </span>
-
-          <span>
-            ✓ समिति के माध्यम से उपयोग
-          </span>
-
+          <span>✓ हर आर्थिक सहयोग का रिकॉर्ड</span>
+          <span>✓ प्राप्ति और व्यय में पारदर्शिता</span>
+          <span>✓ समिति के माध्यम से उपयोग</span>
         </div>
 
       </div>
-
     </section>
 
   </main>
 
-
-  <!-- ==============================
-       FOOTER
-       ============================== -->
-
   <footer class="site-footer">
-
     <div class="footer-inner">
 
-
       <div class="footer-copy">
-
-        <span>
-          © 2026 Daandata
-        </span>
-
-        <span>
-          श्री विश्वकर्मा मंदिर एवं सेवा समिति
-        </span>
-
+        <span>© 2026 Daandata</span>
+        <span>श्री विश्वकर्मा मंदिर एवं सेवा समिति</span>
       </div>
 
-
       <div class="footer-contact">
-
         <a
           href="mailto:vishwakarmapoojabhikharirampur@gmail.com"
           class="footer-email"
@@ -436,30 +332,20 @@
         >
           Facebook
         </a>
-
       </div>
 
-
       <div class="developer-credit">
-
-        <span>
-          Designed and developed by
-        </span>
-
+        <span>Designed and developed by</span>
         <a
           href="https://www.surakshawalls.space/software"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <strong>
-            Suraksha Software
-          </strong>
+          <strong>Suraksha Software</strong>
         </a>
-
       </div>
 
     </div>
-
   </footer>
 
 </div>
