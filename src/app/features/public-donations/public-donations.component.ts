@@ -102,7 +102,7 @@ export class PublicDonationsComponent {
   ];
 
   readonly expenses: PublicExpense[] = [
-    { id: 1, description: 'दूध दही साद के लिए', amount: 500 },
+    { id: 1, description: 'दूध दही प्रसाद के लिए', amount: 500 },
     { id: 2, description: 'मूर्ति + मूर्ति रिपेयर', amount: 12000 },
     { id: 3, description: 'रसीद और कार्ड', amount: 2200 },
     { id: 4, description: 'बैनर', amount: 1400 },
