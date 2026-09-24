@@ -1,26 +1,22 @@
 .donations-page {
   min-height: 100vh;
-
   background: #f7f9fc;
   color: #172033;
 }
 
 
-/* ==============================
+/* ============================================================
    HEADER
-   ============================== */
+   ============================================================ */
 
 .site-header {
   background: #ffffff;
-
   border-bottom: 1px solid #e3e8f0;
 }
 
 .header-inner {
   width: min(1180px, calc(100% - 40px));
-
   min-height: 72px;
-
   margin: 0 auto;
 
   display: flex;
@@ -33,11 +29,9 @@
 .brand {
   display: inline-flex;
   align-items: center;
-
   gap: 10px;
 
   color: #172033;
-
   text-decoration: none;
 }
 
@@ -65,10 +59,8 @@
 
 .home-link {
   color: #2864e8;
-
   font-size: 14px;
   font-weight: 700;
-
   text-decoration: none;
 
   transition: color 0.2s ease;
@@ -79,14 +71,34 @@
 }
 
 
-/* ==============================
+/* ============================================================
    HERO
-   ============================== */
+   ============================================================ */
 
 .page-hero {
-  background: #ffffff;
+  position: relative;
+  overflow: hidden;
 
+  background: #ffffff;
   border-bottom: 1px solid #e3e8f0;
+}
+
+.page-hero::after {
+  content: '';
+
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  right: -120px;
+  top: -150px;
+
+  border-radius: 50%;
+
+  background: rgba(40, 100, 232, 0.055);
+
+  pointer-events: none;
 }
 
 .hero-inner {
@@ -125,12 +137,11 @@
 
 .hero-inner h1 span {
   display: block;
-
   color: #2864e8;
 }
 
 .hero-description {
-  max-width: 650px;
+  max-width: 720px;
 
   margin: 20px 0 0;
 
@@ -141,9 +152,9 @@
 }
 
 
-/* ==============================
+/* ============================================================
    SUMMARY
-   ============================== */
+   ============================================================ */
 
 .summary-section {
   width: min(1180px, calc(100% - 40px));
@@ -160,6 +171,11 @@
     repeat(2, minmax(0, 1fr));
 
   gap: 18px;
+}
+
+.summary-grid-four {
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
 }
 
 .summary-card {
@@ -180,6 +196,17 @@
 
   box-shadow:
     0 5px 20px rgba(23, 32, 51, 0.025);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 28px rgba(23, 32, 51, 0.055);
 }
 
 .summary-label {
@@ -208,10 +235,57 @@
   font-size: 12px;
 }
 
+.balance-card {
+  border-color: #cfe4d7;
+  background: #fbfffc;
+}
 
-/* ==============================
-   RECORDS
-   ============================== */
+
+/* ============================================================
+   BANK / CASH
+   ============================================================ */
+
+.money-breakdown-section {
+  padding-top: 0;
+}
+
+.money-breakdown {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.money-breakdown > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  padding: 17px 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe5ee;
+  border-radius: 12px;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.money-breakdown strong {
+  color: #172033;
+  font-size: 16px;
+}
+
+
+/* ============================================================
+   RECORD SECTIONS
+   ============================================================ */
 
 .records-section {
   width: min(1180px, calc(100% - 40px));
@@ -222,6 +296,12 @@
 }
 
 .section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 24px;
+
   margin-bottom: 22px;
 }
 
@@ -239,7 +319,7 @@
 }
 
 .section-description {
-  max-width: 680px;
+  max-width: 760px;
 
   margin: 0;
 
@@ -250,9 +330,9 @@
 }
 
 
-/* ==============================
+/* ============================================================
    TABLE
-   ============================== */
+   ============================================================ */
 
 .table-card {
   overflow: hidden;
@@ -268,7 +348,6 @@
 
 .table-wrapper {
   width: 100%;
-
   overflow-x: auto;
 }
 
@@ -322,9 +401,9 @@ tbody tr:hover {
 }
 
 
-/* ==============================
+/* ============================================================
    SORT BUTTON
-   ============================== */
+   ============================================================ */
 
 .sort-button {
   width: 100%;
@@ -338,6 +417,7 @@ tbody tr:hover {
   background: transparent;
 
   display: inline-flex;
+
   align-items: center;
   justify-content: flex-start;
 
@@ -361,13 +441,11 @@ tbody tr:hover {
 
 th.amount-column .sort-button {
   justify-content: flex-end;
-
   text-align: right;
 }
 
 .sort-button:hover {
   color: #2864e8;
-
   background: #f1f5ff;
 }
 
@@ -389,14 +467,27 @@ th.amount-column .sort-button {
 }
 
 
-/* ==============================
-   TABLE CONTENT
-   ============================== */
+/* ============================================================
+   DONATION CONTENT
+   ============================================================ */
+
+.donor-cell {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
 
 .donor-name {
   color: #172033;
-
   font-weight: 650;
+}
+
+.donor-note {
+  color: #8a97ac;
+
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .amount-cell {
@@ -408,9 +499,241 @@ th.amount-column .sort-button {
 }
 
 
-/* ==============================
+/* ============================================================
+   ALREADY INCLUDED DONATION
+   ============================================================ */
+
+.already-included-row {
+  background: #fffaf1;
+}
+
+.already-included-row:hover {
+  background: #fff7e8;
+}
+
+.already-included-row .donor-name {
+  color: #6b5a35;
+}
+
+.excluded-amount {
+  color: #92713a;
+}
+
+.included-badge {
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  background: #fff4d6;
+
+  border: 1px solid #f3dfaa;
+
+  color: #8a681f;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   TABLE FOOTER
+   ============================================================ */
+
+tfoot td {
+  padding: 17px 22px;
+
+  border-top: 1px solid #dfe5ee;
+  border-bottom: 0;
+
+  background: #fbfcfe;
+
+  color: #52627c;
+}
+
+tfoot .amount-cell {
+  color: #172033;
+}
+
+
+/* ============================================================
+   RECONCILIATION / INFORMATION NOTES
+   ============================================================ */
+
+.included-note {
+  margin-top: 14px;
+
+  padding: 15px 18px;
+
+  border: 1px solid #d8e4f5;
+  border-radius: 10px;
+
+  background: #f7fbff;
+
+  color: #53657e;
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.included-note strong {
+  color: #344a69;
+}
+
+.reconciliation-note {
+  margin-top: 14px;
+
+  padding: 15px 18px;
+
+  border: 1px solid #f2d6a6;
+  border-radius: 10px;
+
+  background: #fffaf1;
+
+  color: #7a5a1a;
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* ============================================================
+   IN-KIND CONTRIBUTIONS
+   ============================================================ */
+
+.in-kind-section,
+.expense-section {
+  border-top: 1px solid #e8edf4;
+}
+
+.in-kind-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.in-kind-card {
+  display: flex;
+
+  gap: 16px;
+
+  padding: 20px;
+
+  border: 1px solid #dfe5ee;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.in-kind-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #cfd9e8;
+
+  box-shadow:
+    0 10px 28px rgba(23, 32, 51, 0.055);
+}
+
+.in-kind-number {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 38px;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background: #eff5ff;
+  color: #2864e8;
+
+  font-weight: 700;
+}
+
+.in-kind-body {
+  min-width: 0;
+}
+
+.in-kind-body h3 {
+  margin: 0 0 8px;
+
+  color: #172033;
+
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.in-kind-body ul {
+  margin: 0;
+
+  padding-left: 20px;
+}
+
+.in-kind-body li {
+  color: #52627c;
+
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.in-kind-body li + li {
+  margin-top: 5px;
+}
+
+
+/* ============================================================
+   EXPENSES
+   ============================================================ */
+
+.expense-section {
+  padding-top: 10px;
+}
+
+.expense-table tbody tr:hover {
+  background: #fffaf5;
+}
+
+.expense-amount {
+  color: #b54708;
+}
+
+.expense-table .expense-amount {
+  color: #b54708;
+}
+
+.expense-verification-note {
+  margin-top: 14px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #dfe5ee;
+  border-radius: 12px;
+
+  background: #f8fafc;
+
+  color: #52627c;
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* ============================================================
    TRANSPARENCY MESSAGE
-   ============================== */
+   ============================================================ */
 
 .transparency-section {
   width: min(1180px, calc(100% - 40px));
@@ -460,13 +783,9 @@ th.amount-column .sort-button {
   line-height: 1.7;
 }
 
-
-/* ==============================
-   TRANSPARENCY POINTS
-   ============================== */
-
 .transparency-points {
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -492,79 +811,9 @@ th.amount-column .sort-button {
 }
 
 
-/* ==============================
-   STATES
-   ============================== */
-
-.state-card {
-  min-height: 170px;
-
-  padding: 32px;
-
-  box-sizing: border-box;
-
-  background: #ffffff;
-
-  border: 1px solid #dfe5ee;
-  border-radius: 14px;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 14px;
-
-  color: #657590;
-
-  text-align: center;
-}
-
-.state-card p {
-  margin: 0;
-
-  font-size: 14px;
-}
-
-.error-card {
-  color: #b42318;
-
-  background: #fff8f7;
-
-  border-color: #f3d2ce;
-}
-
-
-/* ==============================
-   LOADER
-   ============================== */
-
-.loader {
-  width: 24px;
-  height: 24px;
-
-  border: 3px solid #dce8ff;
-  border-top-color: #2864e8;
-
-  border-radius: 50%;
-
-  animation:
-    donation-spin 0.8s linear infinite;
-}
-
-@keyframes donation-spin {
-
-  to {
-    transform: rotate(360deg);
-  }
-
-}
-
-
-/* ==============================
+/* ============================================================
    FOOTER
-   ============================== */
+   ============================================================ */
 
 .site-footer {
   background: #ffffff;
@@ -580,17 +829,16 @@ th.amount-column .sort-button {
   margin: 0 auto;
 
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
   gap: 28px;
 }
 
-
-/* Footer copy */
-
 .footer-copy {
   display: flex;
+
   align-items: center;
 
   flex-wrap: wrap;
@@ -610,11 +858,9 @@ th.amount-column .sort-button {
   color: #a0a9b8;
 }
 
-
-/* Footer contact */
-
 .footer-contact {
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -639,11 +885,9 @@ th.amount-column .sort-button {
   color: #2864e8;
 }
 
-
-/* Facebook */
-
 .facebook-link {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
@@ -670,15 +914,12 @@ th.amount-column .sort-button {
 
 .facebook-link:hover {
   background: #eff6ff;
-
   border-color: #bfdbfe;
 }
 
-
-/* Developer */
-
 .developer-credit {
   display: flex;
+
   align-items: center;
 
   flex-wrap: wrap;
@@ -692,25 +933,28 @@ th.amount-column .sort-button {
 
 .developer-credit a {
   color: #475569;
-
   text-decoration: none;
 }
 
 .developer-credit a:hover {
   color: #111827;
-
   text-decoration: underline;
 }
 
 
-/* ==============================
+/* ============================================================
    TABLET
-   ============================== */
+   ============================================================ */
 
 @media (max-width: 900px) {
 
   .hero-inner {
     padding: 56px 0;
+  }
+
+  .summary-grid-four {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .footer-inner {
@@ -730,13 +974,12 @@ th.amount-column .sort-button {
 
     text-align: center;
   }
-
 }
 
 
-/* ==============================
+/* ============================================================
    MOBILE
-   ============================== */
+   ============================================================ */
 
 @media (max-width: 700px) {
 
@@ -795,7 +1038,8 @@ th.amount-column .sort-button {
     padding: 28px 0 10px;
   }
 
-  .summary-grid {
+  .summary-grid,
+  .summary-grid-four {
     grid-template-columns: 1fr;
 
     gap: 12px;
@@ -811,6 +1055,10 @@ th.amount-column .sort-button {
     font-size: 28px;
   }
 
+  .money-breakdown {
+    grid-template-columns: 1fr;
+  }
+
 
   /* Records */
 
@@ -818,6 +1066,10 @@ th.amount-column .sort-button {
     width: min(100% - 28px, 1180px);
 
     padding: 34px 0 20px;
+  }
+
+  .section-heading {
+    display: block;
   }
 
   .section-heading h2 {
@@ -829,7 +1081,7 @@ th.amount-column .sort-button {
   }
 
 
-  /* Table → mobile cards */
+  /* Tables become cards */
 
   .table-card {
     border-radius: 12px;
@@ -869,7 +1121,8 @@ th.amount-column .sort-button {
     border: 0;
 
     display: flex;
-    align-items: center;
+
+    align-items: flex-start;
     justify-content: space-between;
 
     gap: 20px;
@@ -894,6 +1147,40 @@ th.amount-column .sort-button {
 
   .donor-name {
     text-align: right;
+  }
+
+  .donor-cell {
+    align-items: flex-end;
+
+    text-align: right;
+  }
+
+  .included-badge {
+    max-width: 220px;
+
+    justify-content: center;
+
+    text-align: center;
+  }
+
+
+  /* Notes */
+
+  .included-note,
+  .reconciliation-note,
+  .expense-verification-note {
+    font-size: 12px;
+  }
+
+
+  /* In-kind */
+
+  .in-kind-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .in-kind-card {
+    padding: 18px;
   }
 
 
@@ -976,246 +1263,5 @@ th.amount-column .sort-button {
     flex-direction: column;
 
     gap: 4px;
-  }
-
-}
-
-/* ==============================
-   PUBLIC REPORT ADDITIONS
-   ============================== */
-
-.summary-grid-four {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.balance-card {
-  border-color: #cfe4d7;
-  background: #fbfffc;
-}
-
-.money-breakdown-section {
-  padding-top: 0;
-}
-
-.money-breakdown {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.money-breakdown > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 17px 20px;
-  background: #ffffff;
-  border: 1px solid #dfe5ee;
-  border-radius: 12px;
-  color: #64748b;
-  font-size: 13px;
-}
-
-.money-breakdown strong {
-  color: #172033;
-  font-size: 16px;
-}
-
-.donor-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.donor-note {
-  color: #8a97ac;
-  font-size: 12px;
-  line-height: 1.45;
-}
-
-tfoot td {
-  padding: 17px 22px;
-  border-top: 1px solid #dfe5ee;
-  border-bottom: 0;
-  background: #fbfcfe;
-  color: #52627c;
-}
-
-tfoot .amount-cell {
-  color: #172033;
-}
-
-.expense-section {
-  padding-top: 10px;
-}
-
-.expense-amount {
-  color: #b54708;
-}
-
-.reconciliation-note {
-  margin-top: 14px;
-  padding: 15px 18px;
-  border: 1px solid #f2d6a6;
-  border-radius: 10px;
-  background: #fffaf1;
-  color: #7a5a1a;
-  font-size: 13px;
-  line-height: 1.65;
-}
-
-@media (max-width: 900px) {
-  .summary-grid-four {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
-  .summary-grid-four,
-  .money-breakdown {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-.in-kind-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.in-kind-card {
-  display: flex;
-  gap: 16px;
-  padding: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  background: #fff;
-}
-
-.in-kind-number {
-  display: grid;
-  place-items: center;
-  flex: 0 0 36px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.06);
-  font-weight: 700;
-}
-
-.in-kind-body h3 {
-  margin: 0 0 8px;
-}
-
-.in-kind-body ul {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.in-kind-body li + li {
-  margin-top: 5px;
-}
-
-.expense-verification-note {
-  margin-top: 14px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.04);
-}
-
-@media (max-width: 760px) {
-  .in-kind-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* ==============================
-   FINAL REPORT POLISH
-   ============================== */
-
-.page-hero {
-  position: relative;
-  overflow: hidden;
-}
-
-.page-hero::after {
-  content: '';
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  right: -120px;
-  top: -150px;
-  border-radius: 50%;
-  background: rgba(40, 100, 232, 0.055);
-  pointer-events: none;
-}
-
-.section-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.in-kind-section,
-.expense-section {
-  border-top: 1px solid #e8edf4;
-}
-
-.in-kind-card {
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-
-.in-kind-card:hover {
-  transform: translateY(-2px);
-  border-color: #cfd9e8;
-  box-shadow: 0 10px 28px rgba(23, 32, 51, 0.055);
-}
-
-.in-kind-number {
-  flex: 0 0 38px;
-  width: 38px;
-  height: 38px;
-  background: #eff5ff;
-  color: #2864e8;
-}
-
-.in-kind-body h3 {
-  color: #172033;
-  font-size: 16px;
-  line-height: 1.4;
-}
-
-.in-kind-body li {
-  color: #52627c;
-  font-size: 14px;
-  line-height: 1.55;
-}
-
-.expense-table tbody tr:hover {
-  background: #fffaf5;
-}
-
-.expense-table .expense-amount {
-  color: #b54708;
-}
-
-.expense-verification-note {
-  border: 1px solid #dfe5ee;
-  background: #f8fafc;
-  color: #52627c;
-  font-size: 13px;
-  line-height: 1.65;
-}
-
-@media (max-width: 700px) {
-  .section-heading {
-    display: block;
-  }
-
-  .in-kind-card {
-    padding: 18px;
   }
 }

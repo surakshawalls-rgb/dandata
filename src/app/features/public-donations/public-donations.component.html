@@ -1,22 +1,48 @@
 <div class="donations-page">
 
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+
   <header class="site-header">
+
     <div class="header-inner">
-      <a class="brand" href="/home">
-        <span class="brand-mark">D</span>
-        <span class="brand-name">Daandata</span>
+
+      <a
+        class="brand"
+        href="/home"
+      >
+        <span class="brand-mark">
+          D
+        </span>
+
+        <span class="brand-name">
+          Daandata
+        </span>
       </a>
 
-      <a class="home-link" href="/home">
+      <a
+        class="home-link"
+        href="/home"
+      >
         ← होम
       </a>
+
     </div>
+
   </header>
+
 
   <main>
 
+    <!-- =======================================================
+         HERO
+         ======================================================= -->
+
     <section class="page-hero">
+
       <div class="hero-inner">
+
         <p class="eyebrow">
           श्री विश्वकर्मा मंदिर एवं सेवा समिति · 2026
         </p>
@@ -27,302 +53,665 @@
         </h1>
 
         <p class="hero-description">
-          विश्वकर्मा पूजा 2026 के लिए प्राप्त आर्थिक सहयोग और आयोजन
-          व्यय का सार्वजनिक एवं पारदर्शी विवरण।
+          विश्वकर्मा पूजा 2026 के लिए प्राप्त आर्थिक सहयोग,
+          वस्तु के रूप में प्राप्त सहयोग तथा आयोजन व्यय का
+          सार्वजनिक एवं पारदर्शी विवरण।
         </p>
+
       </div>
+
     </section>
 
+
+    <!-- =======================================================
+         SUMMARY
+         ======================================================= -->
+
     <section class="summary-section">
+
       <div class="summary-grid summary-grid-four">
 
         <article class="summary-card">
-          <span class="summary-label">कुल प्राप्ति</span>
+
+          <span class="summary-label">
+            कुल प्राप्ति
+          </span>
+
           <strong class="summary-value">
             {{ formatAmount(reportedTotalReceived) }}
           </strong>
+
           <span class="summary-description">
             बैंक + नकद · Final Report
           </span>
+
         </article>
 
+
         <article class="summary-card">
-          <span class="summary-label">कुल व्यय</span>
+
+          <span class="summary-label">
+            कुल व्यय
+          </span>
+
           <strong class="summary-value">
             {{ formatAmount(reportedTotalExpense) }}
           </strong>
+
           <span class="summary-description">
             पूजा आयोजन का Final Expense
           </span>
+
         </article>
 
+
         <article class="summary-card balance-card">
-          <span class="summary-label">कुल बचत</span>
+
+          <span class="summary-label">
+            कुल बचत
+          </span>
+
           <strong class="summary-value">
             {{ formatAmount(reportedBalance) }}
           </strong>
+
           <span class="summary-description">
             प्राप्ति − व्यय
           </span>
+
         </article>
 
+
         <article class="summary-card">
-          <span class="summary-label">कुल दान प्रविष्टियाँ</span>
+
+          <span class="summary-label">
+            कुल दान प्रविष्टियाँ
+          </span>
+
           <strong class="summary-value">
             {{ donations.length }}
           </strong>
+
           <span class="summary-description">
-            आर्थिक सहयोग की consolidated entries
+            सार्वजनिक रूप से दर्ज प्रविष्टियाँ
           </span>
+
         </article>
 
       </div>
+
     </section>
+
+
+    <!-- =======================================================
+         BANK / CASH
+         ======================================================= -->
 
     <section class="summary-section money-breakdown-section">
+
       <div class="money-breakdown">
-        <div>
-          <span>🏦 बैंक से प्राप्ति</span>
-          <strong>{{ formatAmount(reportedBankReceived) }}</strong>
-        </div>
 
         <div>
-          <span>💵 नकद प्राप्ति</span>
-          <strong>{{ formatAmount(reportedCashReceived) }}</strong>
+
+          <span>
+            🏦 बैंक से प्राप्ति
+          </span>
+
+          <strong>
+            {{ formatAmount(reportedBankReceived) }}
+          </strong>
+
         </div>
+
+
+        <div>
+
+          <span>
+            💵 नकद प्राप्ति
+          </span>
+
+          <strong>
+            {{ formatAmount(reportedCashReceived) }}
+          </strong>
+
+        </div>
+
       </div>
+
     </section>
+
+
+    <!-- =======================================================
+         DONATIONS
+         ======================================================= -->
 
     <section class="records-section">
 
       <div class="section-heading">
+
         <div>
-          <p class="eyebrow">आर्थिक सहयोग</p>
-          <h2>प्राप्त दान / सहयोग का विवरण</h2>
-          <p class="section-description">
-            नीचे समिति के consolidated आर्थिक सहयोग की सभी 42 प्रविष्टियाँ
-            दी गई हैं। एक ही व्यक्ति की बैंक एवं नकद entries को जहाँ नाम
-            स्पष्ट रूप से समान था, एक साथ रखा गया है।
+
+          <p class="eyebrow">
+            आर्थिक सहयोग
           </p>
+
+          <h2>
+            प्राप्त दान / सहयोग का विवरण
+          </h2>
+
+          <p class="section-description">
+            समिति के उपलब्ध consolidated आर्थिक सहयोग की
+            सभी प्रविष्टियाँ नीचे दी गई हैं। जहाँ बैंक एवं नकद
+            entries एक ही व्यक्ति से संबंधित थीं, उन्हें एक साथ
+            रखा गया है।
+          </p>
+
         </div>
+
       </div>
 
+
       <div class="table-card">
+
         <div class="table-wrapper">
+
           <table>
+
             <thead>
+
               <tr>
+
                 <th>
+
                   <button
                     type="button"
                     class="sort-button"
                     [class.active]="sortColumn === 'donor_name'"
                     (click)="sortBy('donor_name')"
                   >
-                    <span>दानदाता / स्रोत</span>
-                    <span class="sort-icon">{{ getSortIcon('donor_name') }}</span>
+
+                    <span>
+                      दानदाता / स्रोत
+                    </span>
+
+                    <span class="sort-icon">
+                      {{ getSortIcon('donor_name') }}
+                    </span>
+
                   </button>
+
                 </th>
 
+
                 <th class="amount-column">
+
                   <button
                     type="button"
                     class="sort-button"
                     [class.active]="sortColumn === 'amount'"
                     (click)="sortBy('amount')"
                   >
-                    <span>राशि</span>
-                    <span class="sort-icon">{{ getSortIcon('amount') }}</span>
+
+                    <span>
+                      राशि
+                    </span>
+
+                    <span class="sort-icon">
+                      {{ getSortIcon('amount') }}
+                    </span>
+
                   </button>
+
                 </th>
+
               </tr>
+
             </thead>
 
+
             <tbody>
-              @for (donation of sortedDonations; track donation.id) {
-                <tr>
-                  <td data-label="दानदाता / स्रोत">
+
+              @for (
+                donation of sortedDonations;
+                track donation.id
+              ) {
+
+                <tr
+                  [class.already-included-row]="!donation.includedInTotal"
+                >
+
+                  <td
+                    data-label="दानदाता / स्रोत"
+                  >
+
                     <div class="donor-cell">
+
                       <span class="donor-name">
                         {{ donation.donor_name }}
                       </span>
 
+
                       @if (donation.note) {
+
                         <span class="donor-note">
                           {{ donation.note }}
                         </span>
+
                       }
+
+
+                      @if (!donation.includedInTotal) {
+
+                        <span class="included-badge">
+                          ✓ कुल प्राप्ति में पहले से शामिल
+                        </span>
+
+                      }
+
                     </div>
+
                   </td>
+
 
                   <td
                     class="amount-cell"
-                    data-label="Amount"
+                    data-label="राशि"
+                    [class.excluded-amount]="!donation.includedInTotal"
                   >
+
                     {{ formatAmount(donation.amount) }}
+
                   </td>
+
                 </tr>
+
               }
+
             </tbody>
 
+
             <tfoot>
+
               <tr>
+
                 <td>
-                  <strong>Itemized entries total</strong>
+
+                  <strong>
+                    Itemized entries total
+                  </strong>
+
                 </td>
+
                 <td class="amount-cell">
-                  <strong>{{ formatAmount(itemizedDonationTotal) }}</strong>
+
+                  <strong>
+                    {{ formatAmount(itemizedDonationTotal) }}
+                  </strong>
+
                 </td>
+
               </tr>
+
             </tfoot>
+
           </table>
+
         </div>
+
       </div>
 
+
+      @if (excludedDonationAmount > 0) {
+
+        <div class="included-note">
+
+          <strong>
+            महत्वपूर्ण:
+          </strong>
+
+          रामबली पांडेय (पूर्व प्रधान) डंगहर द्वारा दिए गए
+          <strong>
+            {{ formatAmount(excludedDonationAmount) }}
+          </strong>
+          पहले से दान पेटी की राशि में शामिल हैं।
+          इसलिए इन्हें कुल प्राप्ति में दोबारा नहीं जोड़ा गया है।
+
+        </div>
+
+      }
+
+
       @if (reconciliationDifference !== 0) {
-        
+
+        <div class="reconciliation-note">
+
+          <strong>
+            हिसाब सत्यापन:
+          </strong>
+
+          Itemized entries का कुल योग
+          <strong>
+            {{ formatAmount(itemizedDonationTotal) }}
+          </strong>
+          है, जबकि Final Report में कुल प्राप्ति
+          <strong>
+            {{ formatAmount(reportedTotalReceived) }}
+          </strong>
+          दर्ज है।
+
+          अंतर:
+          <strong>
+            {{ formatAmount(reconciliationDifference) }}
+          </strong>
+
+        </div>
+
       }
 
     </section>
 
+
+    <!-- =======================================================
+         IN-KIND CONTRIBUTIONS
+         ======================================================= -->
+
     <section class="records-section in-kind-section">
 
       <div class="section-heading">
+
         <div>
-          <p class="eyebrow">वस्तु के रूप में प्राप्त सहयोग</p>
-          <h2>वस्तु एवं सामग्री के रूप में प्राप्त सहयोग</h2>
-          <p class="section-description">
-            ये सहयोग वस्तु या सामग्री के रूप में प्राप्त हुए हैं और ₹98,028 की आर्थिक प्राप्ति में शामिल नहीं हैं।
+
+          <p class="eyebrow">
+            वस्तु के रूप में प्राप्त सहयोग
           </p>
+
+          <h2>
+            वस्तु एवं सामग्री के रूप में प्राप्त सहयोग
+          </h2>
+
+          <p class="section-description">
+            ये सहयोग वस्तु या सामग्री के रूप में प्राप्त हुए हैं
+            और ₹98,028 की आर्थिक प्राप्ति में शामिल नहीं हैं।
+          </p>
+
         </div>
+
       </div>
 
+
       <div class="in-kind-grid">
-        @for (contribution of inKindContributions; track contribution.id) {
+
+        @for (
+          contribution of inKindContributions;
+          track contribution.id
+        ) {
+
           <article class="in-kind-card">
-            <div class="in-kind-number">{{ contribution.id }}</div>
-            <div class="in-kind-body">
-              <h3>{{ contribution.contributor }}</h3>
-              <ul>
-                @for (item of contribution.items; track item) {
-                  <li>{{ item }}</li>
-                }
-              </ul>
+
+            <div class="in-kind-number">
+              {{ contribution.id }}
             </div>
+
+
+            <div class="in-kind-body">
+
+              <h3>
+                {{ contribution.contributor }}
+              </h3>
+
+
+              <ul>
+
+                @for (
+                  item of contribution.items;
+                  track item
+                ) {
+
+                  <li>
+                    {{ item }}
+                  </li>
+
+                }
+
+              </ul>
+
+            </div>
+
           </article>
+
         }
+
       </div>
 
     </section>
+
+
+    <!-- =======================================================
+         EXPENSES
+         ======================================================= -->
 
     <section class="records-section expense-section">
 
       <div class="section-heading">
+
         <div>
-          <p class="eyebrow">आयोजन का व्यय</p>
-          <h2>विस्तृत व्यय विवरण</h2>
-          <p class="section-description">
-            नीचे 2026 के उपलब्ध व्यय रिकॉर्ड की सभी 34 प्रविष्टियाँ दी गई हैं। इन सभी प्रविष्टियों का कुल योग ₹97,073 है।
+
+          <p class="eyebrow">
+            आयोजन का व्यय
           </p>
+
+          <h2>
+            विस्तृत व्यय विवरण
+          </h2>
+
+          <p class="section-description">
+            नीचे 2026 के उपलब्ध व्यय रिकॉर्ड की सभी 34
+            प्रविष्टियाँ दी गई हैं। इन सभी प्रविष्टियों का कुल
+            योग ₹97,073 है।
+          </p>
+
         </div>
+
       </div>
 
+
       <div class="table-card">
+
         <div class="table-wrapper">
+
           <table class="expense-table">
+
             <thead>
+
               <tr>
-                <th>व्यय का विवरण</th>
-                <th class="amount-column">राशि</th>
+
+                <th>
+                  व्यय का विवरण
+                </th>
+
+                <th class="amount-column">
+                  राशि
+                </th>
+
               </tr>
+
             </thead>
 
+
             <tbody>
-              @for (expense of expenses; track expense.id) {
+
+              @for (
+                expense of expenses;
+                track expense.id
+              ) {
+
                 <tr>
+
                   <td data-label="व्यय का विवरण">
+
                     <div class="donor-cell">
+
                       <span class="donor-name">
                         {{ expense.description }}
                       </span>
+
+
                       @if (expense.note) {
+
                         <span class="donor-note">
                           {{ expense.note }}
                         </span>
+
                       }
+
                     </div>
+
                   </td>
+
 
                   <td
                     class="amount-cell expense-amount"
-                    data-label="Amount"
+                    data-label="राशि"
                   >
+
                     {{ formatAmount(expense.amount) }}
+
                   </td>
+
                 </tr>
+
               }
+
             </tbody>
 
+
             <tfoot>
+
               <tr>
+
                 <td>
-                  <strong>कुल व्यय</strong>
+
+                  <strong>
+                    कुल व्यय
+                  </strong>
+
                 </td>
+
                 <td class="amount-cell">
-                  <strong>{{ formatAmount(reportedTotalExpense) }}</strong>
+
+                  <strong>
+                    {{ formatAmount(reportedTotalExpense) }}
+                  </strong>
+
                 </td>
+
               </tr>
+
             </tfoot>
+
           </table>
+
         </div>
+
       </div>
 
+
       <div class="expense-verification-note">
-        विस्तृत व्यय का कुल योग: <strong>{{ formatAmount(itemizedExpenseTotal) }}</strong> — यह रिपोर्ट में दिए गए अंतिम व्यय से मेल खाता है।
+
+        विस्तृत व्यय का कुल योग:
+        <strong>
+          {{ formatAmount(itemizedExpenseTotal) }}
+        </strong>
+
+        — यह रिपोर्ट में दिए गए अंतिम व्यय
+        <strong>
+          {{ formatAmount(reportedTotalExpense) }}
+        </strong>
+        से मेल खाता है।
+
       </div>
 
     </section>
 
+
+    <!-- =======================================================
+         TRANSPARENCY MESSAGE
+         ======================================================= -->
+
     <section class="transparency-section">
+
       <div class="transparency-content">
 
-        <p class="eyebrow">हमारा संकल्प</p>
+        <p class="eyebrow">
+          हमारा संकल्प
+        </p>
+
 
         <h2>
           पूजा से सेवा तक, एक सतत संकल्प।
         </h2>
 
+
         <p>
-          हर वर्ष श्री विश्वकर्मा पूजा के साथ मंदिर निर्माण और समाज सेवा
-          की दिशा में एक कदम आगे बढ़ाने का हमारा संकल्प है।
+          हर वर्ष श्री विश्वकर्मा पूजा के साथ मंदिर निर्माण
+          और समाज सेवा की दिशा में एक कदम आगे बढ़ाने का
+          हमारा संकल्प है।
         </p>
 
+
         <div class="transparency-points">
-          <span>✓ हर आर्थिक सहयोग का रिकॉर्ड</span>
-          <span>✓ प्राप्ति और व्यय में पारदर्शिता</span>
-          <span>✓ समिति के माध्यम से उपयोग</span>
+
+          <span>
+            ✓ हर आर्थिक सहयोग का रिकॉर्ड
+          </span>
+
+          <span>
+            ✓ प्राप्ति और व्यय में पारदर्शिता
+          </span>
+
+          <span>
+            ✓ समिति के माध्यम से उपयोग
+          </span>
+
         </div>
 
       </div>
+
     </section>
 
   </main>
 
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+
   <footer class="site-footer">
+
     <div class="footer-inner">
 
       <div class="footer-copy">
-        <span>© 2026 Daandata</span>
-        <span>श्री विश्वकर्मा मंदिर एवं सेवा समिति</span>
+
+        <span>
+          © 2026 Daandata
+        </span>
+
+        <span>
+          श्री विश्वकर्मा मंदिर एवं सेवा समिति
+        </span>
+
       </div>
 
+
       <div class="footer-contact">
+
         <a
           href="mailto:vishwakarmapoojabhikharirampur@gmail.com"
           class="footer-email"
         >
           vishwakarmapoojabhikharirampur@gmail.com
         </a>
+
 
         <a
           href="https://www.facebook.com/profile.php?id=61594199260188"
@@ -332,20 +721,30 @@
         >
           Facebook
         </a>
+
       </div>
 
+
       <div class="developer-credit">
-        <span>Designed and developed by</span>
+
+        <span>
+          Designed and developed by
+        </span>
+
         <a
           href="https://www.surakshawalls.space/software"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <strong>Suraksha Software</strong>
+          <strong>
+            Suraksha Software
+          </strong>
         </a>
+
       </div>
 
     </div>
+
   </footer>
 
 </div>
